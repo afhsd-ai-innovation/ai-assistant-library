@@ -41,18 +41,28 @@
         </div>
 
         <!-- Error State (Hidden by default) -->
-        <div id="error-container" class="hidden mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 text-red-700 shadow-sm">
-            <div class="flex items-center gap-3">
-                <i data-lucide="alert-circle" class="w-5 h-5 shrink-0"></i>
+        <div id="error-container" class="hidden mb-6 p-6 bg-red-50 border border-red-200 rounded-xl flex flex-col gap-4 text-red-700 shadow-sm transition-all animate-in fade-in zoom-in-95 duration-300">
+            <div class="flex items-start gap-4">
+                <i data-lucide="alert-circle" class="w-6 h-6 shrink-0 mt-0.5"></i>
                 <div>
-                    <p class="text-sm font-bold">Sync Error</p>
-                    <p id="error-message" class="text-xs opacity-90"></p>
+                    <p class="text-base font-bold">Database Connection Failed</p>
+                    <p id="error-message" class="text-sm opacity-90 leading-relaxed mt-1"></p>
+                    <div class="mt-4 p-3 bg-white/50 rounded-lg border border-red-100 text-xs font-mono">
+                        <strong>Troubleshooting Checklist:</strong>
+                        <ul class="list-disc ml-4 mt-2 space-y-1">
+                            <li>Is your Google Sheet <strong>"Published to Web"</strong> as a CSV?</li>
+                            <li>Is <strong>"Restrict access to domain"</strong> definitely unchecked?</li>
+                            <li>Your school network may be blocking the data proxies we use to bypass browser security.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <button onclick="fetchData()" class="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 rounded-lg text-sm font-bold transition-colors shrink-0">
-                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                Retry Connection
-            </button>
+            <div class="flex justify-end pt-2">
+                <button onclick="fetchData()" class="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-bold transition-all shadow-md active:scale-95">
+                    <i data-lucide="refresh-cw" class="w-4 h-4" id="retry-icon"></i>
+                    Retry Connection
+                </button>
+            </div>
         </div>
 
         <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
@@ -98,7 +108,7 @@
                         <option value="All">All Platforms</option>
                     </select>
 
-                    <!-- VIEW MODE TOGGLE (SQUARED ICONS) -->
+                    <!-- VIEW MODE TOGGLE -->
                     <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white h-[48px]">
                         <button id="grid-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -153,7 +163,7 @@
 
         <!-- No Results -->
         <div id="no-results" class="hidden text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200 shadow-sm">
-            <i data-lucide="search" class="w-12 h-12 text-slate-300 mx-auto mb-4"></i>
+            <i data-lucide="search" class="w-12 h-12 text-slate-300 mx-auto mb-4" id="no-results-icon"></i>
             <h3 class="text-xl font-bold text-slate-900">No matches found</h3>
             <p class="text-slate-500 mt-2">Try adjusting your search or category filters.</p>
             <button onclick="resetFilters()" class="mt-6 bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
@@ -174,7 +184,7 @@
         // State
         let assistants = [];
         let searchQuery = "";
-        let selectedCategory = "Featured"; // Default to Featured on load
+        let selectedCategory = "Featured"; 
         let selectedType = "All";
         let viewMode = "grid";
 
@@ -196,9 +206,6 @@
 
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        /**
-         * Safety function for Lucide icons to prevent "lucide is not defined" error
-         */
         function safeRefreshIcons() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -207,9 +214,6 @@
             }
         }
 
-        /**
-         * CSV Parser
-         */
         function parseCSV(text) {
             if (!text || text.trim().length === 0) return [];
             const lines = text.split(/\r?\n/).filter(line => line.trim() !== "");
@@ -255,32 +259,43 @@
             }).filter(item => item.name !== "Untitled Assistant" || item.description !== "");
         }
 
-        /**
-         * Fetch Data Logic
-         */
         async function fetchData() {
             loadingScreen.style.display = 'flex';
             loadingScreen.style.opacity = '1';
             errorContainer.classList.add('hidden');
             refreshIcon.classList.add('animate-spin');
 
+            // Force a fresh request with a direct cache-buster
+            const cacheBuster = `&t=${Date.now()}`;
+            const finalSourceUrl = SHEET_CSV_URL + cacheBuster;
+
             const strategies = [
-                { name: 'Direct Fetch', type: 'text', url: SHEET_CSV_URL },
-                { name: 'CORS Proxy IO', type: 'text', url: `https://corsproxy.io/?${encodeURIComponent(SHEET_CSV_URL)}` },
-                { name: 'AllOrigins JSON', type: 'json', url: `https://api.allorigins.win/get?url=${encodeURIComponent(SHEET_CSV_URL)}` },
-                { name: 'AllOrigins Raw', type: 'text', url: `https://api.allorigins.win/raw?url=${encodeURIComponent(SHEET_CSV_URL)}` }
+                { 
+                    name: 'Primary Proxy (AllOrigins JSON)', 
+                    type: 'json', 
+                    url: `https://api.allorigins.win/get?url=${encodeURIComponent(finalSourceUrl)}` 
+                },
+                { 
+                    name: 'Secondary Proxy (CORSProxy)', 
+                    type: 'text', 
+                    url: `https://corsproxy.io/?${encodeURIComponent(finalSourceUrl)}` 
+                },
+                { 
+                    name: 'Direct Browser Request', 
+                    type: 'text', 
+                    url: finalSourceUrl 
+                }
             ];
 
             let success = false;
-            let finalErrorMessage = "Network connection failed.";
+            let finalErrorDetail = "No data received.";
 
             for (const strategy of strategies) {
                 try {
-                    const cacheBuster = `&t=${Date.now()}`;
-                    const targetUrl = strategy.url + cacheBuster;
-
-                    const response = await fetch(targetUrl);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    console.log(`Connection attempt: ${strategy.name}`);
+                    const response = await fetch(strategy.url);
+                    
+                    if (!response.ok) throw new Error(`Server returned status ${response.status}`);
                     
                     let csvText = "";
                     if (strategy.type === 'json') {
@@ -291,14 +306,15 @@
                     }
 
                     const data = parseCSV(csvText);
-                    
-                    if (data.length > 0) {
+                    if (data && data.length > 0) {
                         assistants = data;
                         success = true;
+                        console.log("Database connected successfully.");
                         break;
                     }
                 } catch (e) {
-                    finalErrorMessage = e.message;
+                    finalErrorDetail = e.message;
+                    console.error(`${strategy.name} failed:`, e);
                 }
             }
 
@@ -312,12 +328,12 @@
             } else {
                 loadingScreen.style.display = 'none';
                 errorContainer.classList.remove('hidden');
-                errorMessage.textContent = `Sync Error: ${finalErrorMessage}. Tip: If you are on a restricted school network, try checking the page on a personal device.`;
+                errorMessage.textContent = `Error: ${finalErrorDetail}. This usually means your current network or browser is blocking the data request. Try checking the "Publish to Web" settings in your Google Sheet one more time.`;
             }
         }
 
         function updateFiltersUI() {
-            const baseCategories = [...new Set(assistants.map(a => a.category))].filter(c => c !== "Featured").sort();
+            const baseCategories = [...new Set(assistants.map(a => a.category))].filter(c => c !== "Featured" && c !== "").sort();
             const uniqueCategories = ["All", "Featured", ...baseCategories];
 
             categoryFilters.innerHTML = uniqueCategories.map(cat => `
@@ -330,7 +346,7 @@
                 </button>
             `).join('');
 
-            const uniqueTypes = ["All", ...new Set(assistants.map(a => a.type))].sort();
+            const uniqueTypes = ["All", ...new Set(assistants.map(a => a.type))].filter(t => t !== "").sort();
             typeFilter.innerHTML = uniqueTypes.map(t => `
                 <option value="${t}" ${selectedType === t ? 'selected' : ''}>${t === 'All' ? 'All Platforms' : t}</option>
             `).join('');
@@ -367,7 +383,6 @@
 
             resultsCount.textContent = `Found ${filtered.length} assistant${filtered.length !== 1 ? 's' : ''}`;
             
-            // Toggle view mode styles (EXACT MATCH FOR SQUARED LOOK)
             if (viewMode === 'grid') {
                 gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white";
                 listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
