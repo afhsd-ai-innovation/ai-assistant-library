@@ -34,6 +34,7 @@
 
 <body class="bg-slate-50 text-slate-900 min-h-screen">
     <div id="app" class="max-w-6xl mx-auto p-4 md:p-8">
+
         <!-- Loading -->
         <div id="loading-screen" class="fixed inset-0 flex flex-col items-center justify-center bg-slate-50 z-50">
             <i data-lucide="loader-2" class="w-10 h-10 animate-spin text-blue-600 mb-4"></i>
@@ -95,19 +96,13 @@
             <div class="flex flex-col md:flex-row gap-4 items-stretch">
                 <div class="relative flex-grow w-full">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
-                    <input
-                        id="search-input"
-                        type="text"
-                        placeholder="Search by name or description..."
-                        class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all h-[48px]"
-                    />
+                    <input id="search-input" type="text" placeholder="Search by name or description..."
+                           class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all h-[48px]" />
                 </div>
 
                 <div class="flex items-center gap-3 w-full md:w-auto">
-                    <select
-                        id="type-filter"
-                        class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm flex-grow md:flex-grow-0 cursor-pointer h-[48px]"
-                    >
+                    <select id="type-filter"
+                            class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm flex-grow md:flex-grow-0 cursor-pointer h-[48px]">
                         <option value="All">All Platforms</option>
                     </select>
 
@@ -115,20 +110,13 @@
                     <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white h-[48px]">
                         <button id="grid-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="14" width="7" height="7"></rect>
-                                <rect x="3" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
                             </svg>
                         </button>
                         <button id="list-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none border-l border-slate-100">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                <circle cx="3" cy="6" r="1" fill="currentColor"></circle>
-                                <circle cx="3" cy="12" r="1" fill="currentColor"></circle>
-                                <circle cx="3" cy="18" r="1" fill="currentColor"></circle>
+                                <line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line>
+                                <circle cx="3" cy="6" r="1" fill="currentColor"></circle><circle cx="3" cy="12" r="1" fill="currentColor"></circle><circle cx="3" cy="18" r="1" fill="currentColor"></circle>
                             </svg>
                         </button>
                     </div>
@@ -191,8 +179,8 @@
         // CONFIG
         // =========================
 
-        // Apps Script Web App (/exec) URL (yours)
-        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_NSi3IJ0Z4dWwP6yRw8P1sk6BqMbfbwq1U4h9KFUsW5S9hArBLr37r_YwVpZ8LbklyA/exec";
+        // 1) PASTE YOUR APPS SCRIPT WEB APP /exec URL HERE:
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbx5YpYmJ8Oe92erp7y9MpRG6AzEdhQMiD6ctMrjHEJrwQAWebvdtQH-SO45QF3kC8YNnw/exec";
 
         // Share / suggestion form
         const SHARE_URL = "https://docs.google.com/forms/d/1UNjmdkA__3SQD0JGz_JPVRJYlc2CVPxMGXFazaC-gfE/viewform?edit_requested=true";
@@ -244,18 +232,18 @@
             refreshIcon.classList.add('animate-spin');
 
             try {
+                if (!SHEET_API_URL || SHEET_API_URL.includes("PASTE_YOUR_WEB_APP_URL_HERE")) {
+                    throw new Error("Missing SHEET_API_URL. Paste your Apps Script Web App /exec URL into SHEET_API_URL.");
+                }
+
+                // cache-bust
                 const url = `${SHEET_API_URL}?t=${Date.now()}`;
                 const response = await fetch(url);
 
                 if (!response.ok) throw new Error(`Server returned status ${response.status}`);
 
                 const json = await response.json();
-
-                // Expected payload from Apps Script:
-                // { ok: true, data: [ {id,name,type,status,category,url,description}, ... ] }
-                if (!json || json.ok !== true) {
-                    throw new Error((json && json.error) ? json.error : "API did not return ok:true");
-                }
+                if (!json.ok) throw new Error(json.error || "Unknown API error");
 
                 assistants = Array.isArray(json.data) ? json.data : [];
 
@@ -269,7 +257,7 @@
                 loadingScreen.style.display = 'none';
                 errorContainer.classList.remove('hidden');
                 errorMessage.textContent =
-                    `Error: ${e.message}. If you're hosting this outside Google Sites/Workspace context and get blocked by CORS/network policy, serve this page from Google Sites or Apps Script.`;
+                    `Error: ${e.message}. If you're hosting this outside Google Sites/Workspace context and get a CORS block, the fix is to serve this HTML from Apps Script or Google Sites.`;
             } finally {
                 refreshIcon.classList.remove('animate-spin');
             }
