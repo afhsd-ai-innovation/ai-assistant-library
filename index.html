@@ -153,10 +153,10 @@
   </div>
 
   <script>
-    // 1) PASTE YOUR APPS SCRIPT WEB APP /exec URL HERE:
-    const DATA_API_URL = "PASTE_YOUR_SCRIPT_WEB_APP_EXEC_URL_HERE";
+    // Your Apps Script Web App URL (/exec)
+    const DATA_API_URL = "https://script.google.com/macros/s/AKfycbyEUAuOtJfOIz4ejSZiZj75vUatbD9zAct1BzWusblLRlTAozkeHXJEFXnKffqwbHfgQA/exec";
 
-    // Optional: if you want a specific tab, set it here. If blank, uses first tab.
+    // Optional: put your sheet tab name here. Leave blank to use the first tab.
     const SHEET_TAB_NAME = "";
 
     const FEEDBACK_URL = "https://docs.google.com/forms/d/1UNjmdkA__3SQD0JGz_JPVRJYlc2CVPxMGXFazaC-gfE/viewform?edit_requested=true";
@@ -510,6 +510,9 @@
       resultsCount.textContent = "Loading assistants…";
 
       const cbName = "jsonp_cb_" + Math.random().toString(36).slice(2);
+
+      const script = document.createElement("script");
+
       window[cbName] = (payload) => {
         try {
           if (!payload || !payload.ok) throw new Error((payload && payload.error) || "Unknown error");
@@ -533,10 +536,9 @@
           gridContainer.classList.add('hidden');
           listContainer.classList.add('hidden');
           const p = noResults.querySelector("p");
-          if (p) p.textContent = "Data load failed. Check the Apps Script deployment access.";
-          console.error(err);
+          if (p) p.textContent = "Data load failed. Check Apps Script deployment access and sheet headers.";
+          console.error("Payload error:", err, payload);
         } finally {
-          // cleanup
           delete window[cbName];
           script.remove();
         }
@@ -545,8 +547,8 @@
       const url =
         `${DATA_API_URL}?action=assistants&callback=${encodeURIComponent(cbName)}&tab=${encodeURIComponent(SHEET_TAB_NAME)}`;
 
-      const script = document.createElement("script");
       script.src = url;
+
       script.onerror = () => {
         assistants = [];
         resultsCount.textContent = "Found 0 assistants";
