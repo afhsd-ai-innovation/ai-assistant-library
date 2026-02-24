@@ -1,609 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>District AI Assistant Library</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .line-clamp-1 {
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>District AI Assistant Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
-
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
-  <div id="app" class="max-w-6xl mx-auto p-4 md:p-8">
-    <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
-      <div>
-        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-          District AI Assistant Library
-        </h1>
-        <p class="mt-2 text-slate-600 max-w-2xl">
-          Browse, share, and access specialized AI tools developed for and by District staff.
-          Click any card to launch the assistant.
-        </p>
-      </div>
-      <div class="flex flex-col gap-2 min-w-fit">
-        <a href="https://sites.google.com/aguafria.org/thinkai" target="_blank"
-           class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          Create my own AI assistant
-        </a>
-        <a href="#" target="_blank"
-           class="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 fill-current text-blue-600">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          Create AI Assistant: How-to Video
-        </a>
-      </div>
-    </header>
+    <div id="app" class="max-w-6xl mx-auto p-4 md:p-8">
+        <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                    District AI Assistant Library
+                </h1>
+                <p class="mt-2 text-slate-600 max-w-2xl">
+                    Browse, share, and access specialized AI tools developed for and by District staff. 
+                    Click any card to launch the assistant.
+                </p>
+            </div>
+            <div class="flex flex-col gap-2 min-w-fit">
+                <a href="https://sites.google.com/aguafria.org/thinkai" target="_blank" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Create my own AI assistant
+                </a>
+                <a href="#" target="_blank" class="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 fill-current text-blue-600"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Create AI Assistant: How-to Video
+                </a>
+            </div>
+        </header>
 
-    <div class="space-y-6 mb-8">
-      <div class="flex flex-col md:flex-row gap-4 items-stretch">
-        <div class="relative flex-grow w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input
-            id="search-input"
-            type="text"
-            placeholder="Search by name or description..."
-            class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all h-[48px]"
-          />
+        <div class="space-y-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4 items-stretch">
+                <div class="relative flex-grow w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input
+                        id="search-input"
+                        type="text"
+                        placeholder="Search by name or description..."
+                        class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all h-[48px]"
+                    />
+                </div>
+                
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <select
+                        id="department-filter"
+                        class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm flex-grow md:flex-grow-0 cursor-pointer h-[48px]"
+                    >
+                        <option value="All">All Departments</option>
+                    </select>
+
+                    <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white h-[48px]">
+                        <button id="grid-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </button>
+                        <button id="list-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none border-l border-slate-100 text-slate-400 hover:text-slate-600">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><circle cx="3" cy="6" r="1" fill="currentColor"></circle><circle cx="3" cy="12" r="1" fill="currentColor"></circle><circle cx="3" cy="18" r="1" fill="currentColor"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 items-center">
+                <span class="text-sm font-semibold text-slate-500 mr-2 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Categories:
+                </span>
+                <div id="category-filters" class="flex flex-wrap gap-2">
+                    </div>
+            </div>
         </div>
 
-        <div class="flex items-center gap-3 w-full md:w-auto">
-          <select
-            id="department-filter"
-            class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm flex-grow md:flex-grow-0 cursor-pointer h-[48px]"
-          >
-            <option value="All">All Departments</option>
-          </select>
-
-          <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white h-[48px]">
-            <button id="grid-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-            </button>
-            <button id="list-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none border-l border-slate-100 text-slate-400 hover:text-slate-600">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="8" y1="6" x2="21" y2="6"></line>
-                <line x1="8" y1="12" x2="21" y2="12"></line>
-                <line x1="8" y1="18" x2="21" y2="18"></line>
-                <circle cx="3" cy="6" r="1" fill="currentColor"></circle>
-                <circle cx="3" cy="12" r="1" fill="currentColor"></circle>
-                <circle cx="3" cy="18" r="1" fill="currentColor"></circle>
-              </svg>
-            </button>
-          </div>
+        <div class="mb-4 text-sm text-slate-500 flex justify-between items-center font-medium">
+            <span id="results-count">Loading assistants…</span>
         </div>
-      </div>
 
-      <div class="flex flex-wrap gap-2 items-center">
-        <span class="text-sm font-semibold text-slate-500 mr-2 flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-          </svg>
-          Categories:
-        </span>
-        <div id="category-filters" class="flex flex-wrap gap-2"></div>
-      </div>
-    </div>
-
-    <div class="mb-4 text-sm text-slate-500 flex justify-between items-center font-medium">
-      <span id="results-count">Loading assistants…</span>
-    </div>
-
-    <div id="grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-    <div id="list-container" class="hidden bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left">
-          <thead class="bg-slate-50 border-b border-slate-200">
-            <tr>
-              <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Assistant</th>
-              <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
-              <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Platform</th>
-              <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Status</th>
-            </tr>
-          </thead>
-          <tbody id="list-tbody" class="divide-y divide-slate-100"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div id="no-results" class="hidden text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200 shadow-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-slate-300 mx-auto mb-4">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <h3 class="text-xl font-bold text-slate-900">No matches found</h3>
-      <p id="no-results-msg" class="text-slate-500 mt-2">Try adjusting your search or category filters.</p>
-      <button onclick="resetFilters()" class="mt-6 bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-        Reset Filters
-      </button>
-    </div>
-
-    <footer class="mt-12 text-center text-slate-400 text-sm pb-8">
-      <p>© <span id="year"></span> District AI Assistant Library</p>
-    </footer>
-  </div>
-
-  <script>
-    // ============================
-    // ONLY CHANGE: DATA SOURCE
-    // ============================
-    const DATA_API_URL = "https://script.google.com/macros/s/AKfycbyEUAuOtJfOIz4ejSZiZj75vUatbD9zAct1BzWusblLRlTAozkeHXJEFXnKffqwbHfgQA/exec";
-    const SHEET_TAB_NAME = ""; // optional: set to "Active" if you want to force a tab name
-    // ============================
-
-    const FEEDBACK_URL = "https://docs.google.com/forms/d/1UNjmdkA__3SQD0JGz_JPVRJYlc2CVPxMGXFazaC-gfE/viewform?edit_requested=true";
-
-    // State
-    let assistants = [];
-    let searchQuery = "";
-    let selectedCategory = "All";
-    let selectedDepartment = "All";
-    let viewMode = "grid";
-
-    // DOM Elements
-    const gridContainer = document.getElementById('grid-container');
-    const listContainer = document.getElementById('list-container');
-    const listTbody = document.getElementById('list-tbody');
-    const searchInput = document.getElementById('search-input');
-    const departmentFilter = document.getElementById('department-filter');
-    const categoryFilters = document.getElementById('category-filters');
-    const gridBtn = document.getElementById('grid-view-btn');
-    const listBtn = document.getElementById('list-view-btn');
-    const resultsCount = document.getElementById('results-count');
-    const noResults = document.getElementById('no-results');
-    const noResultsMsg = document.getElementById('no-results-msg');
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function safeRefreshIcons() {
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-    }
-
-    function updateFiltersUI() {
-      const baseCategories = [...new Set(assistants.map(a => a.category))].filter(c => c !== "").sort();
-      const uniqueCategories = ["All", ...baseCategories];
-
-      categoryFilters.innerHTML = uniqueCategories.map(cat => `
-        <button
-          onclick="setCategory('${cat.replace(/'/g, "\\'")}')"
-          class="category-pill px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300 hover:bg-blue-50'}"
-          data-category="${cat}"
-        >
-          ${cat}
-        </button>
-      `).join('');
-
-      const baseDepartments = [...new Set(assistants.map(a => a.department || "General"))].filter(d => d !== "").sort();
-      departmentFilter.innerHTML =
-        `<option value="All" ${selectedDepartment === 'All' ? 'selected' : ''}>All Departments</option>` +
-        baseDepartments.map(dept => `
-          <option value="${dept}" ${selectedDepartment === dept ? 'selected' : ''}>${dept}</option>
-        `).join('');
-    }
-
-    // Fallback-safe platform icons:
-    // - Tries your original external image URLs
-    // - If the image is blocked/fails, it auto-hides and shows inline SVG fallback
-    function getPlatformIconHTML(type) {
-      const normalized = String(type || "").toLowerCase();
-      const iconClass = "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm overflow-hidden border border-slate-100 bg-white";
-
-      const chatgptImg = "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg";
-      const geminiImg = "https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619";
-
-      const chatgptFallbackSvg = `
-        <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-900" aria-hidden="true">
-          <path fill="currentColor" d="M12 2.4c-1.7 0-3.3.7-4.5 1.8-1.2-.2-2.4.1-3.4.8-1.5 1-2.3 2.7-2.2 4.5-.9 1-1.4 2.3-1.4 3.7 0 2.1 1.1 4 2.9 5 0 1.9 1 3.7 2.7 4.7 1.6 1 3.7 1.1 5.4.1 1.2.5 2.6.6 3.9.2 2.1-.7 3.6-2.6 3.9-4.7 1.3-1 2.1-2.6 2.1-4.2 0-1.7-.8-3.2-2.1-4.2.1-1.9-.8-3.7-2.4-4.7-1.3-.8-2.9-1-4.4-.6C15.2 3.1 13.7 2.4 12 2.4z"/>
-        </svg>`;
-
-      const geminiFallbackSvg = `
-        <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-900" aria-hidden="true">
-          <path fill="currentColor" d="M12 2l1.4 6.1L20 9.5l-6.1 1.4L12 17l-1.4-6.1L4 9.5l6.6-1.4L12 2z"/>
-          <path fill="currentColor" opacity="0.7" d="M18 13l.9 3.8L23 18l-4.1.9L18 23l-.9-4.1L13 18l4.1-1.2L18 13z"/>
-        </svg>`;
-
-      if (normalized.includes("gpt")) {
-        return `
-          <div class="${iconClass} relative">
-            <img src="${chatgptImg}" class="w-full h-full object-cover" alt="ChatGPT"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div style="display:none;" class="w-full h-full flex items-center justify-center">
-              ${chatgptFallbackSvg}
+        <div id="grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
-          </div>`;
-      }
 
-      if (normalized.includes("gemini") || normalized.includes("gem")) {
-        return `
-          <div class="${iconClass} relative">
-            <img src="${geminiImg}" class="w-full h-full object-cover" alt="Gemini"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div style="display:none;" class="w-full h-full flex items-center justify-center">
-              ${geminiFallbackSvg}
+        <div id="list-container" class="hidden bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Assistant</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Platform</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-tbody" class="divide-y divide-slate-100">
+                        </tbody>
+                </table>
             </div>
-          </div>`;
-      }
+        </div>
 
-      if (normalized.includes("notebook")) {
-        return `<div class="${iconClass} bg-indigo-600 border-none">
-          <i data-lucide="book-open" class="w-full h-full text-white p-1.5"></i>
-        </div>`;
-      }
+        <div id="no-results" class="hidden text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-slate-300 mx-auto mb-4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <h3 class="text-xl font-bold text-slate-900">No matches found</h3>
+            <p id="no-results-msg" class="text-slate-500 mt-2">Try adjusting your search or category filters.</p>
+            <button onclick="resetFilters()" class="mt-6 bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
+                Reset Filters
+            </button>
+        </div>
 
-      return `<div class="${iconClass} bg-slate-400 border-none font-bold text-[10px] text-white">AI</div>`;
-    }
+        <footer class="mt-12 text-center text-slate-400 text-sm pb-8">
+            <p>© <span id="year"></span> District AI Assistant Library</p>
+        </footer>
+    </div>
 
-    function render() {
-      const filtered = assistants.filter(item => {
-        const matchesSearch = searchQuery === "" ||
-          (item.name || "").toLowerCase().includes(searchQuery) ||
-          (item.description || "").toLowerCase().includes(searchQuery);
-        const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-        const matchesDepartment = selectedDepartment === "All" || (item.department || "General") === selectedDepartment;
-        return matchesSearch && matchesCategory && matchesDepartment;
-      }).sort((a, b) => {
-        const aStatus = (a.status || "").toLowerCase();
-        const bStatus = (b.status || "").toLowerCase();
-        const aSpecial = aStatus.includes('featured') || aStatus.includes('new');
-        const bSpecial = bStatus.includes('featured') || bStatus.includes('new');
-        if (aSpecial && !bSpecial) return -1;
-        if (!aSpecial && bSpecial) return 1;
-        return (a.name || "").localeCompare(b.name || "");
-      });
+    <script>
+        // ==========================================
+        // ONLY CHANGE: assistants come from Apps Script JSONP now
+        // ==========================================
+        const DATA_API_URL = "https://script.google.com/macros/s/AKfycbyEUAuOtJfOIz4ejSZiZj75vUatbD9zAct1BzWusblLRlTAozkeHXJEFXnKffqwbHfgQA/exec";
+        const SHEET_TAB_NAME = ""; // optional: set to your tab name if your script supports it
+        let assistants = [];
+        // ==========================================
 
-      resultsCount.textContent = `Found ${filtered.length} assistant${filtered.length !== 1 ? 's' : ''}`;
+        const FEEDBACK_URL = "https://docs.google.com/forms/d/1UNjmdkA__3SQD0JGz_JPVRJYlc2CVPxMGXFazaC-gfE/viewform?edit_requested=true";
+        
+        // State
+        let searchQuery = "";
+        let selectedCategory = "All"; 
+        let selectedDepartment = "All";
+        let viewMode = "grid";
 
-      if (filtered.length === 0) {
-        noResults.classList.remove('hidden');
-        gridContainer.classList.add('hidden');
-        listContainer.classList.add('hidden');
-      } else {
-        noResults.classList.add('hidden');
-        if (viewMode === 'grid') {
-          gridContainer.classList.remove('hidden');
-          listContainer.classList.add('hidden');
-          renderGrid(filtered);
-        } else {
-          gridContainer.classList.add('hidden');
-          listContainer.classList.remove('hidden');
-          renderList(filtered);
-        }
-      }
-      safeRefreshIcons();
-    }
+        // DOM Elements
+        const gridContainer = document.getElementById('grid-container');
+        const listContainer = document.getElementById('list-container');
+        const listTbody = document.getElementById('list-tbody');
+        const searchInput = document.getElementById('search-input');
+        const departmentFilter = document.getElementById('department-filter');
+        const categoryFilters = document.getElementById('category-filters');
+        const gridBtn = document.getElementById('grid-view-btn');
+        const listBtn = document.getElementById('list-view-btn');
+        const resultsCount = document.getElementById('results-count');
+        const noResults = document.getElementById('no-results');
+        const noResultsMsg = document.getElementById('no-results-msg');
 
-    function renderGrid(data) {
-      gridContainer.innerHTML = data.map(item => {
-        const statusLower = (item.status || "").toLowerCase();
-        const isFeatured = statusLower.includes('featured');
-        const isNew = statusLower.includes('new');
-        const isSpecial = isFeatured || isNew;
-        const safeName = (item.name || "").replace(/'/g, "\\'");
-        const safeInstructions = (item.instructions || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        const infoIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
-        const bookmarkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>`;
-
-        const commonButtons = `
-          <button onclick="handleFeedback(event)" title="Help improve this assistant: Provide feedback or request a change." class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </button>
-          ${item.instructions ? `<button onclick="handleInfo(event, '${safeName}', '${safeInstructions}')" title="View instructions" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${infoIconSVG}</button>` : ''}
-          <button onclick="handleBookmark(event, '${safeName}', '${item.url}')" title="Bookmark this assistant" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">
-            ${bookmarkIconSVG}
-          </button>
-        `;
-
-        if (isSpecial) {
-          const badgeText = isNew ? "New" : "Featured";
-          const badgeColor = isNew ? "bg-red-600" : "bg-blue-600";
-          const borderColor = isNew ? "border-red-200" : "border-blue-200";
-          const shadowColor = isNew ? "hover:shadow-red-50" : "hover:shadow-blue-50";
-          const hoverBorder = isNew ? "hover:border-red-300" : "hover:border-blue-300";
-
-          return `
-            <a href="${item.url}" target="_blank" rel="noopener" class="group bg-white rounded-3xl border ${borderColor} p-6 ${hoverBorder} hover:shadow-xl ${shadowColor} transition-all duration-300 flex flex-col h-full relative overflow-hidden">
-              <div class="absolute top-0 right-0 ${badgeColor} text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest z-10">${badgeText}</div>
-              <div class="flex items-start justify-between mb-4">
-                ${getPlatformIconHTML(item.type)}
-                <div class="flex items-center gap-1.5"></div>
-              </div>
-              <div class="flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-4">${item.description || ""}</p>
-              </div>
-              <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-                  <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  ${commonButtons}
-                  <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors"></i>
-                </div>
-              </div>
-            </a>
-          `;
+        function safeRefreshIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
 
-        return `
-          <a href="${item.url}" target="_blank" rel="noopener" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-400 hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col h-full relative">
-            <div class="flex items-start justify-between mb-4">
-              ${getPlatformIconHTML(item.type)}
-              <div class="flex items-center gap-1.5">
-                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
-              </div>
-            </div>
-            <div class="flex-grow">
-              <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-              <p class="text-sm text-slate-500 line-clamp-2 mb-4">${item.description || ""}</p>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-              <div class="flex flex-wrap gap-1.5">
-                <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-                <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                ${commonButtons}
-                <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors"></i>
-              </div>
-            </div>
-          </a>
-        `;
-      }).join('');
-    }
+        function updateFiltersUI() {
+            // Category Filters (Pills)
+            const baseCategories = [...new Set(assistants.map(a => a.category))].filter(c => c !== "").sort();
+            const uniqueCategories = ["All", ...baseCategories];
 
-    function renderList(data) {
-      const infoIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
-      const bookmarkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>`;
-
-      listTbody.innerHTML = data.map(item => {
-        const safeName = (item.name || "").replace(/'/g, "\\'");
-        const safeInstructions = (item.instructions || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
-        return `
-          <tr onclick="window.open('${item.url}', '_blank')" class="hover:bg-blue-50 transition-colors cursor-pointer group">
-            <td class="px-6 py-4">
-              <div class="flex items-center gap-4">
-                ${getPlatformIconHTML(item.type)}
-                <div>
-                  <div class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${item.name || ""}</div>
-                  <div class="text-xs text-slate-400 line-clamp-1 max-w-md">${item.description || ""}</div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-            </td>
-            <td class="px-6 py-4">
-              <span class="text-sm text-slate-600">${item.type || ""}</span>
-            </td>
-            <td class="px-6 py-4 text-right">
-              <div class="flex items-center justify-end gap-1.5">
-                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
-                <button onclick="handleFeedback(event)" title="Help improve this assistant: Provide feedback or request a change." class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            categoryFilters.innerHTML = uniqueCategories.map(cat => `
+                <button 
+                    onclick="setCategory('${cat.replace(/'/g, "\\'")}')"
+                    class="category-pill px-4 py-1.5 rounded-full text-sm font-medium transition-all ${selectedCategory === cat ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300 hover:bg-blue-50'}"
+                    data-category="${cat}"
+                >
+                    ${cat}
                 </button>
-                ${item.instructions ? `<button onclick="handleInfo(event, '${safeName}', '${safeInstructions}')" title="View instructions" class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">${infoIconSVG}</button>` : ''}
-                <button onclick="handleBookmark(event, '${safeName}', '${item.url}')" title="Bookmark this assistant" class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">
-                  ${bookmarkIconSVG}
-                </button>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors ml-1"></i>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
+            `).join('');
 
-    function getStatusClass(status) {
-      const s = String(status || "").toLowerCase();
-      if (s.includes('featured')) return 'bg-purple-100 text-purple-700';
-      if (s.includes('live')) return 'bg-emerald-100 text-emerald-700';
-      if (s.includes('new')) return 'bg-red-100 text-red-700';
-      if (s.includes('beta')) return 'bg-amber-100 text-amber-700';
-      return 'bg-amber-100 text-amber-700';
-    }
-
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      render();
-    });
-
-    departmentFilter.addEventListener('change', (e) => {
-      selectedDepartment = e.target.value;
-      render();
-    });
-
-    function setCategory(cat) {
-      selectedCategory = cat;
-      updateFiltersUI();
-      render();
-    }
-
-    gridBtn.addEventListener('click', () => {
-      viewMode = 'grid';
-      gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white";
-      listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
-      render();
-    });
-
-    listBtn.addEventListener('click', () => {
-      viewMode = 'list';
-      gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
-      listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white";
-      render();
-    });
-
-    function handleFeedback(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      window.open(FEEDBACK_URL, '_blank');
-    }
-
-    function handleInfo(event, name, instructions) {
-      event.preventDefault();
-      event.stopPropagation();
-      const overlay = document.createElement('div');
-      overlay.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 transition-opacity duration-300';
-      overlay.style.opacity = '0';
-      overlay.innerHTML = `
-        <div class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
-          <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h3 class="font-extrabold text-xl text-slate-900">How to use ${name}</h3>
-            <button class="close-modal p-2 rounded-full hover:bg-slate-200 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-          </div>
-          <div class="p-8 max-h-[60vh] overflow-y-auto text-slate-600 leading-relaxed text-lg">${instructions}</div>
-          <div class="p-6 bg-slate-50/50 border-t border-slate-100 flex justify-end">
-            <button class="close-modal px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">Got it</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-      const modal = overlay.querySelector('div');
-      const closeModal = () => {
-        overlay.style.opacity = '0';
-        modal.className = modal.className.replace('scale-100', 'scale-95');
-        setTimeout(() => overlay.remove(), 300);
-      };
-      overlay.addEventListener('click', closeModal);
-      overlay.querySelectorAll('.close-modal').forEach(b => b.addEventListener('click', closeModal));
-      setTimeout(() => {
-        overlay.style.opacity = '1';
-        modal.className = modal.className.replace('scale-95', 'scale-100');
-      }, 10);
-    }
-
-    function handleBookmark(event, name, url) {
-      event.preventDefault();
-      event.stopPropagation();
-      const msg = document.createElement('div');
-      msg.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl z-[100] transition-opacity duration-300 pointer-events-none text-center';
-      msg.style.opacity = '0';
-      msg.innerHTML = `
-        <p class="font-bold text-sm mb-0.5">To bookmark "${name}":</p>
-        <p class="text-[11px] opacity-80">Open the link, then press <strong>Ctrl+D</strong> (or <strong>Cmd+D</strong> on Mac)</p>
-      `;
-      document.body.appendChild(msg);
-      setTimeout(() => msg.style.opacity = '1', 10);
-      setTimeout(() => {
-        msg.style.opacity = '0';
-        setTimeout(() => msg.remove(), 300);
-      }, 5000);
-    }
-
-    function resetFilters() {
-      searchQuery = "";
-      selectedCategory = "All";
-      selectedDepartment = "All";
-      searchInput.value = "";
-      departmentFilter.value = "All";
-      updateFiltersUI();
-      render();
-    }
-
-    // ============================
-    // JSONP DATA LOAD (GitHub-safe)
-    // ============================
-    function loadAssistantsJSONP() {
-      resultsCount.textContent = "Loading assistants…";
-
-      const cbName = "jsonp_cb_" + Math.random().toString(36).slice(2);
-      const script = document.createElement("script");
-
-      const cleanup = () => {
-        try { delete window[cbName]; } catch {}
-        try { script.remove(); } catch {}
-      };
-
-      window[cbName] = (payload) => {
-        try {
-          if (!payload || !payload.ok) throw new Error((payload && payload.error) || "Unknown API error");
-          assistants = (payload.assistants || []).map(a => ({
-            name: a.name || "",
-            status: a.status || "",
-            type: a.type || "",
-            department: a.department || "General",
-            category: a.category || "",
-            url: a.url || "",
-            description: a.description || "",
-            instructions: a.instructions || "",
-            keywords: a.keywords || ""
-          }));
-
-          updateFiltersUI();
-          render();
-        } catch (err) {
-          assistants = [];
-          resultsCount.textContent = "Found 0 assistants";
-          noResults.classList.remove('hidden');
-          gridContainer.classList.add('hidden');
-          listContainer.classList.add('hidden');
-          noResultsMsg.textContent = "Data load failed. API returned an error.";
-          console.error("API payload:", payload);
-          console.error("Error:", err);
-        } finally {
-          cleanup();
+            // Department Filter (Dropdown)
+            const baseDepartments = [...new Set(assistants.map(a => a.department || "General"))].filter(d => d !== "").sort();
+            departmentFilter.innerHTML = `<option value="All" ${selectedDepartment === 'All' ? 'selected' : ''}>All Departments</option>` + 
+                baseDepartments.map(dept => `
+                <option value="${dept}" ${selectedDepartment === dept ? 'selected' : ''}>${dept}</option>
+            `).join('');
         }
-      };
 
-      const url =
-        `${DATA_API_URL}?action=assistants` +
-        `&tab=${encodeURIComponent(SHEET_TAB_NAME)}` +
-        `&callback=${encodeURIComponent(cbName)}`;
+        function getPlatformIconHTML(type) {
+            const normalized = (type || "").toLowerCase();
+            const iconClass = "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm overflow-hidden border border-slate-100 bg-white";
+            
+            if (normalized.includes("gpt")) {
+                return `<div class="${iconClass}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" class="w-full h-full object-cover" alt="ChatGPT">
+                </div>`;
+            } else if (normalized.includes("gemini") || normalized.includes("gem")) {
+                return `<div class="${iconClass}">
+                    <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-full h-full object-cover" alt="Gemini">
+                </div>`;
+            } else if (normalized.includes("notebook")) {
+                return `<div class="${iconClass} bg-indigo-600 border-none">
+                    <i data-lucide="book-open" class="w-full h-full text-white p-1.5"></i>
+                </div>`;
+            }
+            return `<div class="${iconClass} bg-slate-400 border-none font-bold text-[10px] text-white">AI</div>`;
+        }
 
-      script.src = url;
+        function render() {
+            const filtered = assistants.filter(item => {
+                const name = (item.name || "").toLowerCase();
+                const desc = (item.description || "").toLowerCase();
 
-      script.onerror = () => {
-        assistants = [];
-        resultsCount.textContent = "Found 0 assistants";
-        noResults.classList.remove('hidden');
-        gridContainer.classList.add('hidden');
-        listContainer.classList.add('hidden');
-        noResultsMsg.textContent = "Data load failed. The API script could not be reached.";
-        console.error("JSONP script failed to load:", url);
-        cleanup();
-      };
+                const matchesSearch = searchQuery === "" || 
+                    name.includes(searchQuery) || 
+                    desc.includes(searchQuery);
 
-      document.head.appendChild(script);
-    }
+                const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+                const matchesDepartment = selectedDepartment === "All" || (item.department || "General") === selectedDepartment;
+                return matchesSearch && matchesCategory && matchesDepartment;
+            }).sort((a, b) => {
+                // Featured or New apps always at the top
+                const aStatus = (a.status || "").toLowerCase();
+                const bStatus = (b.status || "").toLowerCase();
+                const aSpecial = aStatus.includes('featured') || aStatus.includes('new');
+                const bSpecial = bStatus.includes('featured') || bStatus.includes('new');
+                if (aSpecial && !bSpecial) return -1;
+                if (!aSpecial && bSpecial) return 1;
+                return (a.name || "").localeCompare((b.name || ""));
+            });
 
-    // Initialize
-    loadAssistantsJSONP();
-  </script>
+            resultsCount.textContent = `Found ${filtered.length} assistant${filtered.length !== 1 ? 's' : ''}`;
+            
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+                gridContainer.classList.add('hidden');
+                listContainer.classList.add('hidden');
+                if (noResultsMsg) noResultsMsg.textContent = "Try adjusting your search or category filters.";
+            } else {
+                noResults.classList.add('hidden');
+                if (viewMode === 'grid') {
+                    gridContainer.classList.remove('hidden');
+                    listContainer.classList.add('hidden');
+                    renderGrid(filtered);
+                } else {
+                    gridContainer.classList.add('hidden');
+                    listContainer.classList.remove('hidden');
+                    renderList(filtered);
+                }
+            }
+            safeRefreshIcons();
+        }
+
+        function renderGrid(data) {
+            gridContainer.innerHTML = data.map(item => {
+                const statusLower = (item.status || "").toLowerCase();
+                const isFeatured = statusLower.includes('featured');
+                const isNew = statusLower.includes('new');
+                const isSpecial = isFeatured || isNew;
+                const safeName = (item.name || "").replace(/'/g, "\\'");
+                const safeInstructions = (item.instructions || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
+                
+                // SVG Icons - Solid Theme
+                const infoIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+                const bookmarkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>`;
+
+                const commonButtons = `
+                    <button onclick="handleFeedback(event)" title="Help improve this assistant: Provide feedback or request a change." class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    ${item.instructions ? `<button onclick="handleInfo(event, '${safeName}', '${safeInstructions}')" title="View instructions" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${infoIconSVG}</button>` : ''}
+                    <button onclick="handleBookmark(event, '${safeName}', '${item.url || ""}')" title="Bookmark this assistant" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">
+                        ${bookmarkIconSVG}
+                    </button>
+                `;
+
+                if (isSpecial) {
+                    const badgeText = isNew ? "New" : "Featured";
+                    const badgeColor = isNew ? "bg-red-600" : "bg-blue-600";
+                    const borderColor = isNew ? "border-red-200" : "border-blue-200";
+                    const shadowColor = isNew ? "hover:shadow-red-50" : "hover:shadow-blue-50";
+                    const hoverBorder = isNew ? "hover:border-red-300" : "hover:border-blue-300";
+
+                    return `
+                        <a href="${item.url || "#"}" target="_blank" rel="noopener" class="group bg-white rounded-3xl border ${borderColor} p-6 ${hoverBorder} hover:shadow-xl ${shadowColor} transition-all duration-300 flex flex-col h-full relative overflow-hidden">
+                            <div class="absolute top-0 right-0 ${badgeColor} text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest z-10">${badgeText}</div>
+                            <div class="flex items-start justify-between mb-4">
+                                ${getPlatformIconHTML(item.type)}
+                                <div class="flex items-center gap-1.5">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-4">${item.description || ""}</p>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                                    <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    ${commonButtons}
+                                    <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                }
+
+                return `
+                    <a href="${item.url || "#"}" target="_blank" rel="noopener" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-400 hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col h-full relative">
+                        <div class="flex items-start justify-between mb-4">
+                            ${getPlatformIconHTML(item.type)}
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
+                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">${item.description || ""}</p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                                <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                ${commonButtons}
+                                <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors"></i>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function renderList(data) {
+            const infoIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+            const bookmarkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>`;
+            
+            listTbody.innerHTML = data.map(item => {
+                const safeName = (item.name || "").replace(/'/g, "\\'");
+                const safeInstructions = (item.instructions || "").replace(/'/g, "\\'").replace(/\n/g, "<br>");
+                return `
+                <tr onclick="window.open('${item.url || "#"}', '_blank')" class="hover:bg-blue-50 transition-colors cursor-pointer group">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-4">
+                            ${getPlatformIconHTML(item.type)}
+                            <div>
+                                <div class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${item.name || ""}</div>
+                                <div class="text-xs text-slate-400 line-clamp-1 max-w-md">${item.description || ""}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-sm text-slate-600">${item.type || ""}</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
+                            <button onclick="handleFeedback(event)" title="Help improve this assistant: Provide feedback or request a change." class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </button>
+                            ${item.instructions ? `<button onclick="handleInfo(event, '${safeName}', '${safeInstructions}')" title="View instructions" class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">${infoIconSVG}</button>` : ''}
+                            <button onclick="handleBookmark(event, '${safeName}', '${item.url || ""}')" title="Bookmark this assistant" class="p-1.5 rounded-md hover:bg-white text-blue-600 transition-colors">
+                                ${bookmarkIconSVG}
+                            </button>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors ml-1"></i>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // FIXED: your original function only worked when status was EXACTLY "live"/"featured"/"new"
+        // Your data has "Live, Featured" and "Featured, New" etc. This fixes pills.
+        function getStatusClass(status) {
+            const s = (status || "").toLowerCase();
+            if (s.includes('featured')) return 'bg-purple-100 text-purple-700';
+            if (s.includes('live')) return 'bg-emerald-100 text-emerald-700';
+            if (s.includes('new')) return 'bg-red-100 text-red-700';
+            return 'bg-amber-100 text-amber-700';
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            render();
+        });
+
+        departmentFilter.addEventListener('change', (e) => {
+            selectedDepartment = e.target.value;
+            render();
+        });
+
+        function setCategory(cat) {
+            selectedCategory = cat;
+            updateFiltersUI();
+            render();
+        }
+
+        gridBtn.addEventListener('click', () => {
+            viewMode = 'grid';
+            gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white";
+            listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
+            render();
+        });
+
+        listBtn.addEventListener('click', () => {
+            viewMode = 'list';
+            gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
+            listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-blue-600 text-white";
+            render();
+        });
+
+        function handleFeedback(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(FEEDBACK_URL, '_blank');
+        }
+
+        function handleInfo(event, name, instructions) {
+            event.preventDefault();
+            event.stopPropagation();
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 transition-opacity duration-300';
+            overlay.style.opacity = '0';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <h3 class="font-extrabold text-xl text-slate-900">How to use ${name}</h3>
+                        <button class="close-modal p-2 rounded-full hover:bg-slate-200 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="p-8 max-h-[60vh] overflow-y-auto text-slate-600 leading-relaxed text-lg">${instructions}</div>
+                    <div class="p-6 bg-slate-50/50 border-t border-slate-100 flex justify-end">
+                        <button class="close-modal px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">Got it</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            const modal = overlay.querySelector('div');
+            const closeModal = () => {
+                overlay.style.opacity = '0';
+                modal.className = modal.className.replace('scale-100', 'scale-95');
+                setTimeout(() => overlay.remove(), 300);
+            };
+            overlay.addEventListener('click', closeModal);
+            overlay.querySelectorAll('.close-modal').forEach(b => b.addEventListener('click', closeModal));
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                modal.className = modal.className.replace('scale-95', 'scale-100');
+            }, 10);
+        }
+
+        function handleBookmark(event, name, url) {
+            event.preventDefault();
+            event.stopPropagation();
+            const msg = document.createElement('div');
+            msg.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl z-[100] transition-opacity duration-300 pointer-events-none text-center';
+            msg.style.opacity = '0';
+            msg.innerHTML = `
+                <p class="font-bold text-sm mb-0.5">To bookmark "${name}":</p>
+                <p class="text-[11px] opacity-80">Open the link, then press <strong>Ctrl+D</strong> (or <strong>Cmd+D</strong> on Mac)</p>
+            `;
+            document.body.appendChild(msg);
+            setTimeout(() => msg.style.opacity = '1', 10);
+            setTimeout(() => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 300);
+            }, 5000);
+        }
+
+        function resetFilters() {
+            searchQuery = "";
+            selectedCategory = "All";
+            selectedDepartment = "All";
+            searchInput.value = "";
+            departmentFilter.value = "All";
+            updateFiltersUI();
+            render();
+        }
+
+        // ==========================================
+        // JSONP Loader (GitHub Pages-safe)
+        // This avoids CORS: the API returns JS that calls our callback with JSON
+        // ==========================================
+        function loadAssistantsJSONP() {
+            resultsCount.textContent = "Loading assistants…";
+
+            const cbName = "jsonp_cb_" + Math.random().toString(36).slice(2);
+            const script = document.createElement("script");
+
+            const cleanup = () => {
+                try { delete window[cbName]; } catch {}
+                try { script.remove(); } catch {}
+            };
+
+            window[cbName] = (payload) => {
+                try {
+                    if (!payload || !payload.ok) throw new Error((payload && payload.error) || "Unknown API error");
+
+                    assistants = (payload.assistants || []).map(a => ({
+                        name: a.name || "",
+                        status: a.status || "",
+                        type: a.type || "",
+                        department: a.department || "General",
+                        category: a.category || "",
+                        url: a.url || "",
+                        description: a.description || "",
+                        instructions: a.instructions || ""
+                    }));
+
+                    updateFiltersUI();
+                    render();
+                } catch (err) {
+                    assistants = [];
+                    updateFiltersUI();
+                    render();
+                    if (noResultsMsg) noResultsMsg.textContent = "Data load failed. The API returned an error.";
+                    console.error("API payload:", payload);
+                    console.error("Error:", err);
+                } finally {
+                    cleanup();
+                }
+            };
+
+            const url =
+                `${DATA_API_URL}?action=assistants` +
+                `&tab=${encodeURIComponent(SHEET_TAB_NAME)}` +
+                `&callback=${encodeURIComponent(cbName)}`;
+
+            script.src = url;
+
+            script.onerror = () => {
+                assistants = [];
+                updateFiltersUI();
+                render();
+                if (noResultsMsg) noResultsMsg.textContent = "Data load failed. The API script could not be reached.";
+                console.error("JSONP script failed to load:", url);
+                cleanup();
+            };
+
+            document.head.appendChild(script);
+        }
+
+        // Initialize (now: load from API)
+        loadAssistantsJSONP();
+    </script>
 </body>
 </html>
