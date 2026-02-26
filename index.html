@@ -209,6 +209,33 @@
             return `<div class="${iconClass} bg-slate-400 border-none font-bold text-[10px] text-white">AI</div>`;
         }
 
+        function applyHashFilter() {
+            const hash = window.location.hash.substring(1).trim();
+            const dropdown = document.getElementById('department-filter');
+            
+            if (hash) {
+                const decodedHash = decodeURIComponent(hash).toLowerCase();
+                
+                // Find matching option case-insensitively
+                const matchingOption = Array.from(dropdown.options).find(opt => opt.value.toLowerCase() === decodedHash);
+                
+                if (matchingOption) {
+                    selectedDepartment = matchingOption.value;
+                    dropdown.value = matchingOption.value;
+                } else {
+                    selectedDepartment = "All";
+                    dropdown.value = "All";
+                }
+            } else {
+                selectedDepartment = "All";
+                dropdown.value = "All";
+            }
+            render();
+        }
+
+        // Listen for hash changes while the page is already open
+        window.addEventListener('hashchange', applyHashFilter);
+
         function render() {
             const filtered = assistants.filter(item => {
                 const name = (item.name || "").toLowerCase();
@@ -378,8 +405,6 @@
             `}).join('');
         }
 
-        // FIXED: your original function only worked when status was EXACTLY "live"/"featured"/"new"
-        // Your data has "Live, Featured" and "Featured, New" etc. This fixes pills.
         function getStatusClass(status) {
             const s = (status || "").toLowerCase();
             if (s.includes('featured')) return 'bg-purple-100 text-purple-700';
@@ -395,6 +420,8 @@
 
         departmentFilter.addEventListener('change', (e) => {
             selectedDepartment = e.target.value;
+            // Update the URL hash to match the dropdown selection manually
+            window.location.hash = selectedDepartment === "All" ? "" : selectedDepartment;
             render();
         });
 
@@ -483,6 +510,7 @@
             selectedDepartment = "All";
             searchInput.value = "";
             departmentFilter.value = "All";
+            window.location.hash = ""; // Clear hash on reset
             updateFiltersUI();
             render();
         }
@@ -518,22 +546,8 @@
                     }));
 
                     updateFiltersUI();
+                    applyHashFilter(); // Automatically apply URL hash filtering on load
 
-                    // --- NEW CODE: Check URL for Department Hash ---
-                    const hash = window.location.hash.substring(1); 
-                    if (hash) {
-                        const decodedHash = decodeURIComponent(hash); 
-                        const dropdown = document.getElementById('department-filter');
-                        const optionExists = Array.from(dropdown.options).some(opt => opt.value === decodedHash);
-                        
-                        if (optionExists) {
-                            selectedDepartment = decodedHash; 
-                            dropdown.value = decodedHash;     
-                        }
-                    }
-                    // ------------------------------------------------
-
-                    render();
                 } catch (err) {
                     assistants = [];
                     updateFiltersUI();
