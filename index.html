@@ -518,6 +518,21 @@
                     }));
 
                     updateFiltersUI();
+
+                    // --- NEW CODE: Check URL for Department Hash ---
+                    const hash = window.location.hash.substring(1); 
+                    if (hash) {
+                        const decodedHash = decodeURIComponent(hash); 
+                        const dropdown = document.getElementById('department-filter');
+                        const optionExists = Array.from(dropdown.options).some(opt => opt.value === decodedHash);
+                        
+                        if (optionExists) {
+                            selectedDepartment = decodedHash; 
+                            dropdown.value = decodedHash;     
+                        }
+                    }
+                    // ------------------------------------------------
+
                     render();
                 } catch (err) {
                     assistants = [];
