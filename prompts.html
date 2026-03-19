@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>District AI Prompt Library</title>
+    <link rel="icon" href="https://aguafriaorg.finalsite.com/fs/resource-manager/view/75cf7d4e-3c4e-471c-8714-12a894d02f02">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <div id="app" class="max-w-6xl mx-auto p-4 md:p-8">
+        <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                    District AI Prompt Library
+                </h1>
+                <p class="mt-2 text-slate-600 max-w-2xl">
+                    Browse, share, and access AI prompts developed for and by District staff. 
+                    Click any card to view the prompt.
+                </p>
+            </div>
+            <div class="flex flex-col gap-2 min-w-fit">
+                <a href="https://sites.google.com/aguafria.org/thinkai" target="_blank" class="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-red-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Submit a prompt
+                </a>
+                <a href="index.html" class="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-red-600"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    View AI Assistant Library
+                </a>
+            </div>
+        </header>
+
+        <div class="space-y-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4 items-stretch">
+                <div class="relative flex-grow w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input
+                        id="search-input"
+                        type="text"
+                        placeholder="Search by name or description..."
+                        class="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition-all h-[48px]"
+                    />
+                </div>
+                
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <select
+                        id="department-filter"
+                        class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 shadow-sm flex-grow md:flex-grow-0 cursor-pointer h-[48px]"
+                    >
+                        <option value="All">All Departments</option>
+                    </select>
+
+                    <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white h-[48px]">
+                        <button id="grid-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none bg-red-600 text-white">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </button>
+                        <button id="list-view-btn" class="w-12 h-full flex items-center justify-center transition-all outline-none border-l border-slate-100 text-slate-400 hover:text-slate-600">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><circle cx="3" cy="6" r="1" fill="currentColor"></circle><circle cx="3" cy="12" r="1" fill="currentColor"></circle><circle cx="3" cy="18" r="1" fill="currentColor"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 items-center">
+                <span class="text-sm font-semibold text-slate-500 mr-2 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filters:
+                </span>
+                <div id="category-filters" class="flex flex-wrap gap-2">
+                    </div>
+            </div>
+        </div>
+
+        <div class="mb-4 text-sm text-slate-500 flex justify-between items-center font-medium">
+            <span id="results-count">Loading prompts…</span>
+            <div class="flex items-center gap-2">
+                <a href="https://docs.google.com/spreadsheets/d/1H_US0fDJE4UdjDoD3NrCc11ZFNOiBTMLcUPcnXayihg/edit?gid=0#gid=0" target="_blank" title="View Source Sheet" class="hover:text-red-600 transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </a>
+                <button onclick="loadPromptsJSONP()" title="Refresh data" class="hover:text-red-600 transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+                </button>
+                <span id="last-updated"></span>
+            </div>
+        </div>
+
+        <div id="grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+
+        <div id="list-container" class="hidden bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Prompt</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Department</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Platform</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-tbody" class="divide-y divide-slate-100">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="no-results" class="hidden text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-slate-300 mx-auto mb-4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <h3 class="text-xl font-bold text-slate-900">No matches found</h3>
+            <p id="no-results-msg" class="text-slate-500 mt-2">Try adjusting your search or category filters.</p>
+            <button onclick="resetFilters()" class="mt-6 bg-red-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition-colors shadow-lg shadow-red-200">
+                Reset Filters
+            </button>
+        </div>
+
+        <footer class="mt-12 text-center text-slate-400 text-sm pb-8">
+            <p>© <span id="year"></span> District AI Prompt Library</p>
+            <p class="mt-1">For updates, please contact mriley@aguafria.org.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // DATA SOURCE: Prompt Library spreadsheet via Apps Script JSONP
+        // ==========================================
+        const DATA_API_URL = "https://script.google.com/macros/s/AKfycbxk7Fo7YMds2N-Jzjus2KaIxJL6ApS-j-pCJgxKwyyBYrPfZXnwUyXmjQ3xgE5OWNBNtg/exec";
+        const SHEET_TAB_NAME = ""; // optional: set to your tab name if your script supports it
+        let prompts = [];
+        // ==========================================
+
+        const FEEDBACK_URL = "https://docs.google.com/forms/d/1UNjmdkA__3SQD0JGz_JPVRJYlc2CVPxMGXFazaC-gfE/viewform?edit_requested=true";
+        
+        // State
+        let searchQuery = "";
+        let selectedCategory = "All"; 
+        let selectedDepartment = "All";
+        let viewMode = "grid";
+
+        // DOM Elements
+        const gridContainer = document.getElementById('grid-container');
+        const listContainer = document.getElementById('list-container');
+        const listTbody = document.getElementById('list-tbody');
+        const searchInput = document.getElementById('search-input');
+        const departmentFilter = document.getElementById('department-filter');
+        const categoryFilters = document.getElementById('category-filters');
+        const gridBtn = document.getElementById('grid-view-btn');
+        const listBtn = document.getElementById('list-view-btn');
+        const resultsCount = document.getElementById('results-count');
+        const noResults = document.getElementById('no-results');
+        const noResultsMsg = document.getElementById('no-results-msg');
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function safeRefreshIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function updateFiltersUI() {
+            // Category Filters (Pills)
+            const baseCategories = [...new Set(prompts.map(a => a.category))].filter(c => c !== "").sort();
+            // Added "Featured" and "New" right after "All"
+            const uniqueCategories = ["All", "Featured", "New", ...baseCategories];
+
+            categoryFilters.innerHTML = uniqueCategories.map(cat => {
+                let pillClasses = "";
+                
+                if (selectedCategory === cat) {
+                    pillClasses = "bg-red-600 text-white shadow-md";
+                } else if (cat === "Featured" || cat === "New") {
+                    // Lighter red styling for the standout filters
+                    pillClasses = "bg-red-100 text-red-700 border border-red-200 hover:bg-red-200 hover:border-red-300";
+                } else {
+                    pillClasses = "bg-white text-slate-600 border border-slate-200 hover:border-red-300 hover:bg-red-50";
+                }
+
+                return `
+                    <button 
+                        onclick="setCategory('${cat.replace(/'/g, "\\'")}')"
+                        class="category-pill px-4 py-1.5 rounded-full text-sm font-medium transition-all ${pillClasses}"
+                        data-category="${cat}"
+                    >
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+
+            // Department Filter (Dropdown)
+            const baseDepartments = [...new Set(prompts.map(a => a.department || "General"))].filter(d => d !== "").sort();
+            departmentFilter.innerHTML = `<option value="All" ${selectedDepartment === 'All' ? 'selected' : ''}>All Departments</option>` + 
+                baseDepartments.map(dept => `
+                <option value="${dept}" ${selectedDepartment === dept ? 'selected' : ''}>${dept}</option>
+            `).join('');
+        }
+
+        function getPlatformIconHTML(type) {
+            const normalized = (type || "").toLowerCase();
+            const iconClass = "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm overflow-hidden border border-slate-100 bg-white";
+            
+            if (normalized.includes("gpt")) {
+                return `<div class="${iconClass}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" class="w-full h-full object-cover" alt="ChatGPT">
+                </div>`;
+            } else if (normalized.includes("gemini") || normalized.includes("gem")) {
+                return `<div class="${iconClass}">
+                    <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-full h-full object-cover" alt="Gemini">
+                </div>`;
+            } else if (normalized.includes("notebook")) {
+                return `<div class="${iconClass} bg-indigo-600 border-none">
+                    <i data-lucide="book-open" class="w-full h-full text-white p-1.5"></i>
+                </div>`;
+            }
+            return `<div class="${iconClass} bg-slate-400 border-none font-bold text-[10px] text-white">AI</div>`;
+        }
+
+        function applyHashFilter() {
+            const hash = window.location.hash.substring(1).trim();
+            const dropdown = document.getElementById('department-filter');
+            
+            if (hash) {
+                const decodedHash = decodeURIComponent(hash).toLowerCase();
+                
+                // Find matching option case-insensitively
+                const matchingOption = Array.from(dropdown.options).find(opt => opt.value.toLowerCase() === decodedHash);
+                
+                if (matchingOption) {
+                    selectedDepartment = matchingOption.value;
+                    dropdown.value = matchingOption.value;
+                } else {
+                    selectedDepartment = "All";
+                    dropdown.value = "All";
+                }
+            } else {
+                selectedDepartment = "All";
+                dropdown.value = "All";
+            }
+            render();
+        }
+
+        // Listen for hash changes while the page is already open
+        window.addEventListener('hashchange', applyHashFilter);
+
+        function render() {
+            const filtered = prompts.filter(item => {
+                const name = (item.name || "").toLowerCase();
+                const desc = (item.description || "").toLowerCase();
+                const status = (item.status || "").toLowerCase();
+
+                const matchesSearch = searchQuery === "" || 
+                    name.includes(searchQuery) || 
+                    desc.includes(searchQuery);
+
+                // Surgical update to the category filtering logic
+                let matchesCategory = false;
+                if (selectedCategory === "All") {
+                    matchesCategory = true;
+                } else if (selectedCategory === "Featured") {
+                    matchesCategory = status.includes("featured");
+                } else if (selectedCategory === "New") {
+                    matchesCategory = status.includes("new");
+                } else {
+                    matchesCategory = item.category === selectedCategory;
+                }
+
+                const matchesDepartment = selectedDepartment === "All" || (item.department || "General") === selectedDepartment;
+                return matchesSearch && matchesCategory && matchesDepartment;
+            }).sort((a, b) => {
+                // Featured prompts always at the top
+                const aStatus = (a.status || "").toLowerCase();
+                const bStatus = (b.status || "").toLowerCase();
+                const aSpecial = aStatus.includes('featured');
+                const bSpecial = bStatus.includes('featured');
+                if (aSpecial && !bSpecial) return -1;
+                if (!aSpecial && bSpecial) return 1;
+                return (a.name || "").localeCompare((b.name || ""));
+            });
+
+            resultsCount.textContent = `Found ${filtered.length} prompt${filtered.length !== 1 ? 's' : ''}`;
+            
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+                gridContainer.classList.add('hidden');
+                listContainer.classList.add('hidden');
+                if (noResultsMsg) noResultsMsg.textContent = "Try adjusting your search or category filters.";
+            } else {
+                noResults.classList.add('hidden');
+                if (viewMode === 'grid') {
+                    gridContainer.classList.remove('hidden');
+                    listContainer.classList.add('hidden');
+                    renderGrid(filtered);
+                } else {
+                    gridContainer.classList.add('hidden');
+                    listContainer.classList.remove('hidden');
+                    renderList(filtered);
+                }
+            }
+            safeRefreshIcons();
+        }
+
+        // Store current filtered data globally so we can reference by index
+        let currentFilteredData = [];
+
+        function renderGrid(data) {
+            currentFilteredData = data;
+            gridContainer.innerHTML = data.map((item, idx) => {
+                const statusLower = (item.status || "").toLowerCase();
+                const isFeatured = statusLower.includes('featured');
+                const isNew = statusLower.includes('new');
+                const isSpecial = isFeatured || isNew;
+
+                const bookmarkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>`;
+
+                const commonButtons = `
+                    <button onclick="handleFeedback(event)" title="Help improve this prompt: Provide feedback or request a change." class="p-1.5 rounded-md hover:bg-red-50 text-red-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <button onclick="handleBookmarkByIndex(event, ${idx})" title="Bookmark this prompt" class="p-1.5 rounded-md hover:bg-red-50 text-red-600 transition-colors">
+                        ${bookmarkIconSVG}
+                    </button>
+                `;
+
+                if (isSpecial) {
+                    const badgeText = isNew ? "New" : "Featured";
+                    const badgeColor = isNew ? "bg-red-600" : "bg-red-600";
+                    const borderColor = isNew ? "border-red-200" : "border-red-200";
+                    const shadowColor = isNew ? "hover:shadow-red-50" : "hover:shadow-red-50";
+                    const hoverBorder = isNew ? "hover:border-red-300" : "hover:border-red-300";
+
+                    return `
+                        <div onclick="showPromptModal(${idx})" class="cursor-pointer group bg-white rounded-3xl border ${borderColor} p-6 ${hoverBorder} hover:shadow-xl ${shadowColor} transition-all duration-300 flex flex-col h-full relative overflow-hidden">
+                            <div class="absolute top-0 right-0 ${badgeColor} text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest z-10">${badgeText}</div>
+                            <div class="flex items-start justify-between mb-4">
+                                ${getPlatformIconHTML(item.type)}
+                                <div class="flex items-center gap-1.5">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-red-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-4">${item.description || ""}</p>
+                            </div>
+                            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                                    <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    ${commonButtons}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div onclick="showPromptModal(${idx})" class="cursor-pointer bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-red-400 hover:shadow-xl hover:-translate-y-1 transition-all group flex flex-col h-full relative">
+                        <div class="flex items-start justify-between mb-4">
+                            ${getPlatformIconHTML(item.type)}
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-red-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
+                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">${item.description || ""}</p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                                <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${item.category || ""}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                ${commonButtons}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderList(data) {
+            currentFilteredData = data;
+            listTbody.innerHTML = data.map((item, idx) => {
+                return `
+                <tr onclick="showPromptModal(${idx})" class="hover:bg-red-50 transition-colors cursor-pointer group">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-4">
+                            ${getPlatformIconHTML(item.type)}
+                            <div>
+                                <div class="font-bold text-slate-900 group-hover:text-red-600 transition-colors">${item.name || ""}</div>
+                                <div class="text-xs text-slate-400 line-clamp-1 max-w-md">${item.description || ""}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">${item.department || 'General'}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-sm text-slate-600">${item.type || ""}</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-red-500 transition-colors ml-1"></i>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        // ==========================================
+        // Prompt Modal with Copy Button
+        // ==========================================
+        function showPromptModal(idx) {
+            const item = currentFilteredData[idx];
+            if (!item) return;
+
+            const name = item.name || "Untitled Prompt";
+            const rawContent = item.instructions || item.description || "No prompt content available.";
+            const htmlContent = rawContent.replace(/\n/g, "<br>");
+
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 transition-opacity duration-300';
+            overlay.style.opacity = '0';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <h3 class="font-extrabold text-xl text-slate-900 pr-4">${name}</h3>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button class="copy-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-sm font-semibold transition-colors" title="Copy prompt to clipboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <button class="close-modal p-2 rounded-full hover:bg-slate-200 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8 max-h-[60vh] overflow-y-auto text-slate-600 leading-relaxed text-[15px]">${htmlContent}</div>
+                    <div class="p-6 bg-slate-50/50 border-t border-slate-100 flex justify-end">
+                        <button class="close-modal px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-200">Close</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            const modal = overlay.querySelector('div');
+
+            // Copy button handler
+            overlay.querySelector('.copy-btn').addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(rawContent);
+                    const copyBtn = overlay.querySelector('.copy-btn');
+                    copyBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Copied!
+                    `;
+                    copyBtn.classList.remove('bg-red-50', 'hover:bg-red-100', 'text-red-600');
+                    copyBtn.classList.add('bg-emerald-50', 'text-emerald-600');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy
+                        `;
+                        copyBtn.classList.remove('bg-emerald-50', 'text-emerald-600');
+                        copyBtn.classList.add('bg-red-50', 'hover:bg-red-100', 'text-red-600');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                }
+            });
+
+            // Close handlers
+            const closeModal = () => {
+                overlay.style.opacity = '0';
+                modal.className = modal.className.replace('scale-100', 'scale-95');
+                setTimeout(() => overlay.remove(), 300);
+            };
+            overlay.addEventListener('click', closeModal);
+            overlay.querySelectorAll('.close-modal').forEach(b => b.addEventListener('click', closeModal));
+
+            // Animate in
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                modal.className = modal.className.replace('scale-95', 'scale-100');
+            }, 10);
+        }
+
+        function handleBookmarkByIndex(event, idx) {
+            event.preventDefault();
+            event.stopPropagation();
+            const item = currentFilteredData[idx];
+            if (!item) return;
+            handleBookmark(event, item.name || "", item.url || "");
+        }
+
+        function getStatusClass(status) {
+            const s = (status || "").toLowerCase();
+            if (s.includes('featured')) return 'bg-purple-100 text-purple-700';
+            if (s.includes('live')) return 'bg-emerald-100 text-emerald-700';
+            if (s.includes('new')) return 'bg-red-100 text-red-700';
+            return 'bg-amber-100 text-amber-700';
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            render();
+        });
+
+        departmentFilter.addEventListener('change', (e) => {
+            selectedDepartment = e.target.value;
+            // Update the URL hash to match the dropdown selection manually
+            window.location.hash = selectedDepartment === "All" ? "" : selectedDepartment;
+            render();
+        });
+
+        function setCategory(cat) {
+            selectedCategory = cat;
+            updateFiltersUI();
+            render();
+        }
+
+        gridBtn.addEventListener('click', () => {
+            viewMode = 'grid';
+            gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-red-600 text-white";
+            listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
+            render();
+        });
+
+        listBtn.addEventListener('click', () => {
+            viewMode = 'list';
+            gridBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-white text-slate-400 hover:text-slate-600";
+            listBtn.className = "w-12 h-full flex items-center justify-center transition-all outline-none bg-red-600 text-white";
+            render();
+        });
+
+        function handleFeedback(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(FEEDBACK_URL, '_blank');
+        }
+
+        function handleInfo(event, name, instructions) {
+            event.preventDefault();
+            event.stopPropagation();
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 transition-opacity duration-300';
+            overlay.style.opacity = '0';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <h3 class="font-extrabold text-xl text-slate-900">How to use ${name}</h3>
+                        <button class="close-modal p-2 rounded-full hover:bg-slate-200 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="p-8 max-h-[60vh] overflow-y-auto text-slate-600 leading-relaxed text-lg">${instructions}</div>
+                    <div class="p-6 bg-slate-50/50 border-t border-slate-100 flex justify-end">
+                        <button class="close-modal px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-200">Got it</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            const modal = overlay.querySelector('div');
+            const closeModal = () => {
+                overlay.style.opacity = '0';
+                modal.className = modal.className.replace('scale-100', 'scale-95');
+                setTimeout(() => overlay.remove(), 300);
+            };
+            overlay.addEventListener('click', closeModal);
+            overlay.querySelectorAll('.close-modal').forEach(b => b.addEventListener('click', closeModal));
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                modal.className = modal.className.replace('scale-95', 'scale-100');
+            }, 10);
+        }
+
+        function handleBookmark(event, name, url) {
+            event.preventDefault();
+            event.stopPropagation();
+            const msg = document.createElement('div');
+            msg.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-xl shadow-2xl z-[100] transition-opacity duration-300 pointer-events-none text-center';
+            msg.style.opacity = '0';
+            msg.innerHTML = `
+                <p class="font-bold text-sm mb-0.5">To bookmark "${name}":</p>
+                <p class="text-[11px] opacity-80">Open the link, then press <strong>Ctrl+D</strong> (or <strong>Cmd+D</strong> on Mac)</p>
+            `;
+            document.body.appendChild(msg);
+            setTimeout(() => msg.style.opacity = '1', 10);
+            setTimeout(() => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 300);
+            }, 5000);
+        }
+
+        function resetFilters() {
+            searchQuery = "";
+            selectedCategory = "All";
+            selectedDepartment = "All";
+            searchInput.value = "";
+            departmentFilter.value = "All";
+            window.location.hash = ""; // Clear hash on reset
+            updateFiltersUI();
+            render();
+        }
+
+        // ==========================================
+        // JSONP Loader (GitHub Pages-safe)
+        // This avoids CORS: the API returns JS that calls our callback with JSON
+        // ==========================================
+        function loadPromptsJSONP() {
+            resultsCount.textContent = "Loading prompts…";
+
+            const cbName = "jsonp_cb_" + Math.random().toString(36).slice(2);
+            const script = document.createElement("script");
+
+            const cleanup = () => {
+                try { delete window[cbName]; } catch {}
+                try { script.remove(); } catch {}
+            };
+
+            window[cbName] = (payload) => {
+                try {
+                    if (!payload || !payload.ok) throw new Error((payload && payload.error) || "Unknown API error");
+
+                    prompts = (payload.assistants || []).map(a => ({
+                        name: a["prompt name"] || a.name || "",
+                        status: a.featured ? "Featured" : (a.status || ""),
+                        type: a["ai tool"] || a.type || "AI",
+                        department: a["role/department"] || a.department || "General",
+                        category: a.category || "",
+                        url: a.url || "",
+                        description: a.description || (a["prompt content"] ? a["prompt content"].substring(0, 150) + "..." : ""),
+                        instructions: a["prompt content"] || a.instructions || ""
+                    }));
+
+                    updateFiltersUI();
+                    applyHashFilter(); // Automatically apply URL hash filtering on load
+
+                    // Update "Last updated" display
+                    const now = new Date();
+                    const lastUpdatedEl = document.getElementById('last-updated');
+                    if (lastUpdatedEl) {
+                        const dateStr = (now.getMonth() + 1) + '.' + now.getDate();
+                        const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                        lastUpdatedEl.textContent = 'Last updated: ' + dateStr + ' ' + timeStr;
+                    }
+                    safeRefreshIcons();
+
+                } catch (err) {
+                    prompts = [];
+                    updateFiltersUI();
+                    render();
+                    if (noResultsMsg) noResultsMsg.textContent = "Data load failed. The API returned an error.";
+                    console.error("API payload:", payload);
+                    console.error("Error:", err);
+                } finally {
+                    cleanup();
+                }
+            };
+
+            const url =
+                `${DATA_API_URL}?action=assistants` +
+                `&tab=${encodeURIComponent(SHEET_TAB_NAME)}` +
+                `&callback=${encodeURIComponent(cbName)}`;
+
+            script.src = url;
+
+            script.onerror = () => {
+                prompts = [];
+                updateFiltersUI();
+                render();
+                if (noResultsMsg) noResultsMsg.textContent = "Data load failed. The API script could not be reached.";
+                console.error("JSONP script failed to load:", url);
+                cleanup();
+            };
+
+            document.head.appendChild(script);
+        }
+
+        // Initialize (now: load from API)
+        loadPromptsJSONP();
+        safeRefreshIcons();
+    </script>
+</body>
+</html>
