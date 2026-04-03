@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Training Hub: Create an ADA Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Google+Sans:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        :root {
+            --gpt-blue: #2563eb;
+            --gem-blue: #1a73e8;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Platform Switcher Styling */
+        .platform-card {
+            background: white;
+            border-radius: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            position: relative;
+            z-index: 50;
+        }
+
+        .tab-container {
+            background-color: var(--gpt-blue);
+            padding: 0.5rem;
+            border-radius: 1.25rem;
+            display: inline-flex;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 0.875rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+            z-index: 10;
+        }
+
+        .nav-btn.active {
+            background-color: white;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* SHARED STYLES */
+        .step-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        .step-number-circle {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .info-marker {
+            background: #2563eb;
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .code-block {
+            font-family: 'Fira Code', monospace;
+            position: relative;
+        }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        
+        /* GPT THEME SPECIFICS */
+        .gpt-theme { font-family: 'Inter', sans-serif; }
+        .gpt-theme .code-block {
+            background-color: #f8fafc;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* GEMINI THEME SPECIFICS */
+        .gem-theme { font-family: 'Google Sans', sans-serif; display: none; }
+        .gem-theme .gem-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid #e3e3e3;
+            margin-bottom: 2rem;
+        }
+        .gem-theme .gem-gradient-text {
+            background: linear-gradient(90deg, #4285f4, #9b72cb, #d96570);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gem-theme .code-block {
+            background-color: #f0f4f8;
+            color: #1e293b;
+            border: 1px solid #d1d5db;
+        }
+
+        /* ANIMATIONS & MOCKUPS */
+        .capability-toggle { transition: all 0.3s ease; }
+        .capability-toggle.active { background-color: black; border-color: black; }
+        .capability-toggle.active svg { opacity: 1; }
+        .capability-toggle svg { opacity: 0; transition: opacity 0.2s ease; }
+
+        .tab-highlight {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-highlight.configure-active { transform: translateX(100px); }
+
+        .visibility-mockup {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            width: 340px;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: left;
+        }
+        .visibility-section { padding: 8px 16px; border-bottom: 1px solid #f3f4f6; }
+        .visibility-header { font-size: 10px; font-weight: 700; color: #6b7280; text-transform: uppercase; padding-bottom: 4px; letter-spacing: 0.025em; }
+        .visibility-option { padding: 8px 0; display: flex; align-items: center; font-size: 13px; color: #1f2937; font-weight: 500; line-height: 1.25;}
+        .visibility-option.active { background-color: transparent; }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .notification.show { transform: translateX(-50%) translateY(0); }
+
+        details summary::-webkit-details-marker { display:none; }
+    </style>
+</head>
+<body>
+
+    <!-- GENERAL HEADER -->
+    <header class="pt-16 pb-8 px-4 md:px-8 max-w-4xl mx-auto">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-6 tracking-tight">Create an AI Assistant (Custom GPT or Gem)</h1>
+        <div class="text-lg text-slate-600 leading-relaxed space-y-4">
+            <p>
+                On this page, we will walk you through how to create your first <strong>Custom GPT</strong> or <strong>Gemini Gem</strong>. These are personalized AI assistants designed to perform specific tasks using your own documents as a knowledge source.
+            </p>
+            <p>
+                For this training, we are building an <strong>ADA Digital Accessibility Coach</strong>. This assistant helps users understand the DOJ updates to ADA Title II requirements for web and mobile accessibility, which begin taking effect in April 2026.
+            </p>
+        </div>
+    </header>
+
+    <!-- UNIFIED LIVE DEMO SECTION -->
+    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-8">
+        <div class="step-card bg-blue-50/50 border-blue-200">
+            <div class="flex items-center mb-8">
+                <div class="bg-blue-600 text-white p-3 rounded-xl mr-4 shadow-sm">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 leading-tight">Demo: ADA Digital Accessibility Coach</h2>
+                    <p class="text-slate-600 text-sm tracking-tight mt-1 italic">Interactive preview: Click below to see live versions of the assistant ...</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 border-t border-blue-200">
+                <!-- GPT Side -->
+                <a href="https://chatgpt.com/g/g-6988b740028c8191b645e080a9f403b8-ada-digital-accessibility-coach-demo" target="_blank" class="bg-white p-6 rounded-[2rem] border border-slate-200 flex items-start space-x-4 shadow-sm hover:border-blue-400 hover:shadow-md transition group">
+                    <div class="flex-shrink-0 w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center overflow-hidden">
+                        <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/04e41b96-e940-464d-9b24-5b19ab2b60ca" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition">ADA Digital Accessibility Coach</h4>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mt-1">Custom GPT (OpenAI)</p>
+                    </div>
+                </a>
+
+                <!-- Gem Side -->
+                <a href="https://gemini.google.com/gem/cc81337681b7" target="_blank" class="bg-white p-6 rounded-[2rem] border border-slate-200 flex items-center space-x-4 shadow-sm hover:border-amber-400 hover:shadow-md transition group">
+                    <div class="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100">
+                        <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-amber-600 transition">ADA Digital Accessibility Coach</h4>
+                        <p class="gem-gradient-text text-[10px] font-bold uppercase tracking-widest mt-1">Gemini Gem (Google)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- UNIVERSAL CHOICE PATH (INFORMATIONAL) -->
+    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-8">
+        <div class="step-card border-blue-100 shadow-md">
+            <div class="flex items-start space-x-5">
+                <div class="info-marker bg-blue-600 text-white shadow-sm">i</div>
+                <div class="flex-grow">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Choose GPT or Gem</h3>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">Select the platform that works best for your needs based on the differences below. <strong>Once you've decided, select the matching platform in the card below to begin.</strong></p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Custom GPT Option -->
+                        <div class="bg-blue-50/50 border border-blue-100 rounded-2xl p-6 flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-blue-100 mr-3 overflow-hidden shadow-sm">
+                                    <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/04e41b96-e940-464d-9b24-5b19ab2b60ca" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-bold text-blue-900 text-lg">Custom GPT</h4>
+                            </div>
+                            <ul class="text-sm text-slate-700 space-y-3 flex-grow">
+                                <li>✅ Takes a static snapshot</li>
+                                <li>✅ Re-upload file to update</li>
+                                <li class="pt-2 font-semibold text-blue-800 italic text-xs">Best for: Handbooks, Archived Docs</li>
+                            </ul>
+                        </div>
+
+                        <!-- Gemini Gem Option -->
+                        <div class="bg-amber-50/50 border border-amber-100 rounded-2xl p-6 flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-amber-100 mr-3 overflow-hidden shadow-sm">
+                                    <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-bold text-amber-900 text-lg">Gemini Gem</h4>
+                            </div>
+                            <ul class="text-sm text-slate-700 space-y-3 flex-grow">
+                                <li>✅ Connects to live Google Docs</li>
+                                <li>✅ Updates automatically</li>
+                                <li class="pt-2 font-semibold text-amber-800 italic text-xs">Best for: Living Guidance, Procedures</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLATFORM SELECTOR CARD -->
+    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-12">
+        <div class="platform-card">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-10 text-center tracking-tight leading-tight">Click your chosen platform to continue</h2>
+            <div class="flex justify-center">
+                <div class="tab-container">
+                    <button onclick="switchTab('gpt')" id="btn-gpt" class="nav-btn active">Custom GPT (OpenAI)</button>
+                    <button onclick="switchTab('gem')" id="btn-gem" class="nav-btn">Gemini Gem (Google)</button>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Active workflow: <span id="active-label" class="text-blue-600">Custom GPT</span></p>
+            </div>
+        </div>
+    </section>
+
+    <main class="py-12 px-4 md:px-8 max-w-4xl mx-auto">
+        
+        <!-- ========================================== -->
+        <!-- CUSTOM GPT CONTENT -->
+        <!-- ========================================== -->
+        <div id="content-gpt" class="gpt-theme">
+            
+            <h2 class="text-3xl font-bold text-slate-800 mb-8">Build Your Custom GPT Assistant</h2>
+
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">1</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 1 – Open GPT Editor</h3>
+                        <p class="text-lg text-slate-600 mb-6 leading-relaxed">Click the button below to open the Custom GPT editor in a new tab to begin construction.</p>
+                        <a href="https://chatgpt.com/gpts/editor" target="_blank" class="inline-block bg-blue-600 text-white px-10 py-3.5 rounded-xl font-bold hover:bg-blue-700 transition shadow-md">Open GPT Editor</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">2</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 2 – Navigate to the Configure Tab</h3>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">Once the editor opens, you will see two options at the top: <strong>Create</strong> and <strong>Configure</strong>. Ensure you select the <strong>Configure</strong> tab to access the fields needed for this setup guide.</p>
+                        <div class="flex justify-center py-4">
+                            <div class="bg-slate-100 rounded-xl p-1 inline-flex relative overflow-hidden">
+                                <div id="gpt-tab-hl" class="tab-highlight absolute top-1 bottom-1 w-[100px] bg-white rounded-lg shadow-sm border border-slate-200 configure-active"></div>
+                                <div class="px-6 py-2 text-sm font-bold z-10 w-[100px] text-center text-slate-400">Create</div>
+                                <div class="px-6 py-2 text-sm font-bold z-10 w-[100px] text-center text-slate-900">Configure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">3</div>
+                    <div class="flex-grow space-y-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 3 – Copy Paste Name, Description and Instructions</h3>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <label class="text-lg font-bold text-slate-900 block">Name</label>
+                                    <span class="inline-block bg-blue-100 text-blue-900 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide">Up to 50 characters</span>
+                                </div>
+                                <button onclick="copyText('gpt-name')" class="text-blue-600 text-xs font-bold hover:underline mb-1">Copy Name</button>
+                            </div>
+                            <div class="code-block rounded-lg p-3 text-sm" id="gpt-name">ADA Digital Accessibility Coach</div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <label class="text-lg font-bold text-slate-900 block">Description</label>
+                                    <span class="inline-block bg-blue-100 text-blue-900 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide">Up to 300 characters</span>
+                                </div>
+                                <button onclick="copyText('gpt-desc')" class="text-blue-600 text-xs font-bold hover:underline mb-1">Copy Description</button>
+                            </div>
+                            <div class="code-block rounded-lg p-3 text-sm" id="gpt-desc">This assistant helps organizations understand ADA digital accessibility requirements, explains who the rules apply to and when, and offers practical guidance based on official DOJ sources and optional organization-specific policies.</div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <label class="text-lg font-bold text-slate-900 block">Instructions / System Prompt</label>
+                                    <span class="inline-block bg-blue-100 text-blue-900 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide">Up to 8,000 characters</span>
+                                </div>
+                                <button onclick="copyText('gpt-instr')" class="text-blue-600 text-xs font-bold hover:underline mb-1">Copy Instructions</button>
+                            </div>
+                            <div class="code-block rounded-lg p-4 text-[11px] leading-relaxed max-h-64 overflow-y-auto">
+<pre id="gpt-instr">You are an ADA digital accessibility information and coaching assistant.
+
+Your role is to help users understand and apply ADA digital accessibility requirements using plain, non-technical language.
+
+You do not provide legal advice and you do not guarantee compliance.
+
+Your purpose is to:
+• Explain ADA digital accessibility rules clearly and accurately
+• Help users understand how those rules apply to their specific type of organization
+• Translate regulatory language into practical, real-world actions
+• Suggest reasonable steps organizations can take to improve accessibility
+
+At the start of a new conversation, briefly explain what you can do and how the user can interact with you.
+
+Immediately after that explanation, provide short context about the new ADA digital accessibility rules, including who they apply to and the relevant compliance timelines.
+
+After the introduction and context-setting, ask the required clarification question about the user's organization type.
+
+"I'm an ADA digital accessibility coach. I help explain ADA web and mobile accessibility rules, summarize official guidance, and suggest practical steps for improving accessibility.
+
+For context, the U.S. Department of Justice finalized new ADA rules focused on digital accessibility, including websites, mobile apps, and digital documents. These rules apply primarily to state and local governments, including cities and school districts. Organizations serving 50,000 or more people must comply by April 2026, while smaller entities have until April 2027. While these deadlines apply to public entities, the standards are increasingly influencing expectations for businesses as well.
+
+To get started, which best describes you: a school district, a city or local government, or a business?"
+
+KNOWLEDGE SOURCE PRIORITY:
+1. First, use the uploaded DOJ fact sheet whenever it addresses the question.
+2. Refer to linked Google Docs for organization-specific policies.
+3. If not covered, search official guidance on ADA.gov.</pre>
+                                <button onclick="copyText('gpt-instr')" class="absolute top-2 right-2 text-blue-600 text-xs font-bold bg-white px-2 py-1 rounded shadow-sm border border-slate-200">Copy Instructions</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informational Conversation Starters -->
+            <div class="step-card bg-blue-50/50 border-blue-200">
+                <div class="flex items-start space-x-5">
+                    <div class="info-marker">i</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-900 mb-4">Conversation Starters (No Action Needed)</h3>
+                        <p class="text-lg text-slate-600 mb-4 leading-relaxed">Conversation starters appear as suggestions when users first open your assistant. For this exercise, leave this section blank. The assistant will generate its own context-aware suggestions which you can tweak later.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">4</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 4 – Add Knowledge Source</h3>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">Accepted file types: .pdf, .docx, .xlsx, .pptx, .csv, .txt, .md, .rtf, .json, .html</p>
+                        <a href="https://drive.google.com/file/d/1U6CYL1HC4u6vjUEkA5PlKid_zJ8yTbYT/view?usp=sharing" target="_blank" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex items-center shadow-sm hover:border-blue-300 transition group">
+                            <div class="mr-5 flex-shrink-0">
+                                <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/f26f3f72-4ec8-4b9b-8a4f-a1cdd0d2af6e" alt="PDF Icon" class="w-12 h-12 object-contain">
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-sm text-slate-800 leading-tight">Fact Sheet: New Rule on the Accessibility of Web Content and Mobile Apps Provided by State and Local Governments</h4>
+                                <p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter mb-2">Static PDF Upload</p>
+                                <span class="text-blue-600 text-[11px] font-bold hover:underline">Download & Upload</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informational Model -->
+            <div class="step-card bg-blue-50/50 border-blue-200">
+                <div class="flex items-start space-x-5">
+                    <div class="info-marker">i</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-900 mb-4">Recommended Model (No Action Needed)</h3>
+                        <p class="text-lg text-slate-600 mb-4 leading-relaxed">Platforms use the most capable available model by default. We recommend leaving this as <strong>"No Recommended Model"</strong> so your assistant stays updated automatically.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">5</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 5 – Capabilities</h3>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">For this assistant, it will only be utilizing the documents uploaded in the knowledge base and will not be searching the web. To ensure accuracy based solely on provided sources, it is important to turn off web search capabilities.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                                <h4 class="text-sm font-bold text-slate-900 mb-6 tracking-tight">Capabilities</h4>
+                                <div class="flex items-center space-x-3"><div id="cap-web" class="capability-toggle w-5 h-5 border-2 border-slate-200 rounded flex items-center justify-center text-white active"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg></div><span class="text-sm font-medium text-slate-900">Web Search</span></div>
+                                <div class="flex items-center space-x-3 opacity-60"><div id="cap-apps" class="capability-toggle w-5 h-5 border-2 border-slate-200 rounded flex items-center justify-center text-white"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg></div><span class="text-sm font-medium text-slate-900">Apps <span class="text-[9px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded ml-1">BETA</span></span></div>
+                                <div class="flex items-center space-x-3"><div id="cap-canvas" class="capability-toggle w-5 h-5 border-2 border-slate-200 rounded flex items-center justify-center text-white active"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg></div><span class="text-sm font-medium text-slate-900">Canvas</span></div>
+                                <div class="flex items-center space-x-3"><div id="cap-image" class="capability-toggle w-5 h-5 border-2 border-slate-200 rounded flex items-center justify-center text-white active"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg></div><span class="text-sm font-medium text-slate-900">Image Generation</span></div>
+                                <div class="flex items-center space-x-3 opacity-60"><div id="cap-code" class="capability-toggle w-5 h-5 border-2 border-slate-200 rounded flex items-center justify-center text-white"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg></div><span class="text-sm font-medium text-slate-900 leading-tight">Code Interpreter & Data Analysis</span></div>
+                            </div>
+                            <div class="space-y-2">
+                                <details class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group"><summary class="flex items-center justify-between p-3 cursor-pointer list-none"><span class="text-xs font-bold text-slate-700">Web Search</span><svg class="w-4 h-4 text-slate-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></summary><div class="px-3 pb-3 text-xs text-slate-600">Allows browsing the internet for current or external info.</div></details>
+                                <details class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group"><summary class="flex items-center justify-between p-3 cursor-pointer list-none"><span class="text-xs font-bold text-slate-700">Apps</span><svg class="w-4 h-4 text-slate-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></summary><div class="px-3 pb-3 text-xs text-slate-600">Enables integration with specific third-party applications.</div></details>
+                                <details class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group"><summary class="flex items-center justify-between p-3 cursor-pointer list-none"><span class="text-xs font-bold text-slate-700">Canvas</span><svg class="w-4 h-4 text-slate-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></summary><div class="px-3 pb-3 text-xs text-slate-600">Enables editing longer content in a dedicated workspace.</div></details>
+                                <details class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group"><summary class="flex items-center justify-between p-3 cursor-pointer list-none"><span class="text-xs font-bold text-slate-700">Image Generation</span><svg class="w-4 h-4 text-slate-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></summary><div class="px-3 pb-3 text-xs text-slate-600">Allows creating images from text prompts.</div></details>
+                                <details class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group"><summary class="flex items-center justify-between p-3 cursor-pointer list-none"><span class="text-xs font-bold text-slate-700">Code Interpreter</span><svg class="w-4 h-4 text-slate-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></summary><div class="px-3 pb-3 text-xs text-slate-600">Enables data analysis and code execution.</div></details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informational Actions -->
+            <div class="step-card bg-blue-50/50 border-blue-200">
+                <div class="flex items-start space-x-5">
+                    <div class="info-marker">i</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-900 mb-4">Actions (No Action Needed)</h3>
+                        <p class="text-lg text-slate-600 mb-4 leading-relaxed">Actions connect to external systems through APIs. For this specific assistant, external actions are not required.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">6</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 6 – Profile Image (Optional)</h3>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-dashed border-slate-300 flex flex-col items-center">
+                            <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/d6744431-b77d-4bda-8e9f-b916c16a406c" class="w-20 h-20 rounded-full shadow-md mb-4 hover:scale-105 transition cursor-pointer">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Click icon to download</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">7</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 7 – Save & Create</h3>
+                        <p class="text-lg text-slate-600 mb-4 leading-relaxed">Click the <strong>Create</strong> or <strong>Save</strong> button in the top-right to finalize.</p>
+                        <div class="flex justify-center"><div id="gpt-save-btn" class="bg-slate-900 text-white px-10 py-3 rounded-full font-bold transition">Create</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">8</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Step 8 – Test Your Assistant</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Q1 -->
+                            <button onclick="copyValue('What can you help me with?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q1</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What can you help me with?"</p>
+                            </button>
+                            <!-- Q2 -->
+                            <button onclick="copyValue('What does the new ADA rule require for websites and mobile apps?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q2</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What does the new ADA rule require for websites?"</p>
+                            </button>
+                            <!-- Q3 -->
+                            <button onclick="copyValue('What are some practical steps an organization should focus on first to meet these requirements?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q3</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What practical steps should we focus on first?"</p>
+                            </button>
+                            <!-- Q4 -->
+                            <button onclick="copyValue('Does this rule say anything about accessibility requirements for social media content?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q4</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What does the rule say about social media?"</p>
+                            </button>
+                            <!-- Q5 -->
+                            <button onclick="copyValue('How do accessibility requirements apply to third-party tools or platforms an organization uses?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q5</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"Does this apply to third-party tools?"</p>
+                            </button>
+                            <!-- Q6 -->
+                            <button onclick="copyValue('If we follow these steps, does that guarantee ADA compliance?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q6</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"Does following this guarantee compliance?"</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 9 -->
+            <div class="step-card">
+                <div class="flex items-start space-x-5">
+                    <div class="step-number-circle bg-teal-600 text-white">9</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 9 – Publishing & Sharing</h3>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                            Once you've tested your assistant and it's working perfectly, you're ready to share it. By clicking the arrow next to the <strong>Save</strong> (or <strong>Create</strong>) button in the top-right corner, you can select your visibility settings:
+                        </p>
+                        <div class="flex justify-center py-6">
+                            <div class="visibility-mockup">
+                                <div class="visibility-section">
+                                    <div class="visibility-header">Private</div>
+                                    <div class="visibility-option justify-between">
+                                        <div class="flex items-center"><span class="mr-2">👤</span> Invite-only</div>
+                                        <svg class="w-4 h-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    </div>
+                                </div>
+                                <div class="visibility-section">
+                                    <div class="visibility-header">My Organization</div>
+                                    <div class="visibility-option opacity-60 flex-col items-start space-y-1">
+                                        <div class="flex items-center"><span class="mr-2">🔗</span> Anyone at My Organization with the link</div>
+                                    </div>
+                                    <div class="visibility-option opacity-60">
+                                        <span class="mr-2">🏢</span> My Organization
+                                    </div>
+                                </div>
+                                <div class="visibility-section border-b-0">
+                                    <div class="visibility-header">Public</div>
+                                    <div class="visibility-option opacity-60">
+                                        <span class="mr-2">🔗</span> Anyone with the link
+                                    </div>
+                                    <div class="visibility-option opacity-60">
+                                        <span class="mr-2">🛒</span> GPT Store
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-[10px] text-slate-400 mt-2 italic font-medium uppercase tracking-wider">Visibility Settings Interface Preview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- GEMINI GEM CONTENT -->
+        <!-- ========================================== -->
+        <div id="content-gem" class="gem-theme">
+            
+            <h2 class="text-3xl font-bold text-slate-800 mb-8">Build Your Gemini Gem Assistant</h2>
+
+            <!-- Step 1 -->
+            <div class="gem-card">
+                <div class="flex items-start space-x-6">
+                    <div class="step-number-circle bg-blue-600 text-white text-sm">1</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 1 – Open Gem Editor</h3>
+                        <p class="text-lg text-slate-600 mb-6 leading-relaxed">Click the button below to open the Gemini Gem creator in a new tab to begin construction.</p>
+                        <a href="https://gemini.google.com/gems/create" target="_blank" class="inline-block bg-blue-600 text-white px-10 py-3.5 rounded-xl font-bold hover:bg-blue-700 transition shadow-md">Open Gem Editor</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="gem-card">
+                <div class="flex items-start space-x-6">
+                    <div class="step-number-circle bg-blue-600 text-white text-sm">2</div>
+                    <div class="flex-grow space-y-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 2 – Identity & Instructions</h3>
+                        
+                        <!-- Name Field -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Gem Name</label>
+                            <div class="code-block rounded-2xl p-4 flex justify-between items-center border border-slate-200 bg-white">
+                                <span id="gem-name" class="font-medium text-slate-800">ADA Digital Accessibility Coach</span>
+                                <button onclick="copyText('gem-name')" class="text-blue-600 text-xs font-bold">Copy</button>
+                            </div>
+                        </div>
+
+                        <!-- Description Field -->
+                        <div>
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Description</label>
+                                <button onclick="copyText('gem-desc')" class="text-blue-600 text-xs font-bold mb-1">Copy Description</button>
+                            </div>
+                            <div class="code-block rounded-2xl p-4 border border-slate-200 bg-white text-sm text-slate-800" id="gem-desc">
+                                This assistant helps organizations understand ADA digital accessibility requirements, explains who the rules apply to and when, and offers practical guidance based on official DOJ sources and optional organization-specific policies.
+                            </div>
+                        </div>
+
+                        <!-- Instructions Field -->
+                        <div>
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Instructions</label>
+                                <button onclick="copyText('gem-instr')" class="text-blue-600 text-xs font-bold mb-1">Copy Instructions</button>
+                            </div>
+                            <div class="code-block rounded-2xl p-6 text-[11px] leading-relaxed max-h-80 overflow-y-auto bg-slate-50 border border-slate-200">
+<pre id="gem-instr" class="text-slate-700">You are an ADA digital accessibility information and coaching assistant.
+
+Your role is to help users understand and apply ADA digital accessibility requirements using plain, non-technical language.
+
+You do not provide legal advice and you do not guarantee compliance.
+
+Your purpose is to:
+• Explain ADA digital accessibility rules clearly and accurately
+• Help users understand how those rules apply to their specific type of organization
+• Translate regulatory language into practical, real-world actions
+• Suggest reasonable steps organizations take to improve accessibility
+
+At the start of a new conversation, briefly explain what you can do and how the user can interact with you.
+
+Immediately after that explanation, provide short context about the new ADA digital accessibility rules, including who they apply to and the relevant compliance timelines.
+
+After the introduction and context-setting, ask the required clarification question about the user's organization type.
+
+"I'm an ADA digital accessibility coach. I help explain ADA web and mobile accessibility rules, summarize official guidance, and suggest practical steps for improving accessibility.
+
+For context, the U.S. Department of Justice finalized new ADA rules focused on digital accessibility, including websites, mobile apps, and digital documents. These rules apply primarily to state and local governments, including cities and school districts. Organizations serving 50,000 or more people must comply by April 2026, while smaller entities have until April 2027. While these deadlines apply to public entities, the standards are increasingly influencing expectations for businesses as well.
+
+To get started, which best describes you: a school district, a city or local government, or a business?"
+
+KNOWLEDGE SOURCE PRIORITY:
+1. First, use the uploaded DOJ fact sheet whenever it addresses the question.
+2. Refer to linked Google Docs for organization-specific policies.
+3. If not covered, search official guidance on ADA.gov.</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informational Default Tool -->
+            <div class="step-card bg-blue-50/50 border-blue-200">
+                <div class="flex items-start space-x-5">
+                    <div class="info-marker">i</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-900 mb-4">Default Tool (No Action Needed)</h3>
+                        <p class="text-lg text-slate-600 mb-4 leading-relaxed">Gems allow you to select a default tool for specific tasks. For this Gem, leave the default as <strong>"No Default Tool"</strong> (or the standard model default) to ensure it stays updated with the most capable available model.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="gem-card">
+                <div class="flex items-start space-x-6">
+                    <div class="step-number-circle bg-blue-600 text-white text-sm">3</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Step 3 – Workspace Knowledge</h3>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed">Connect your assistant to live Google Drive files, including Google Docs, Sheets, and Slides.<br>Additional accepted file types: .pdf, .docx, .xlsx, .pptx, .csv, .txt, .jpg, .jpeg, .png</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="https://drive.google.com/file/d/1U6CYL1HC4u6vjUEkA5PlKid_zJ8yTbYT/view?usp=sharing" target="_blank" class="p-5 rounded-3xl bg-slate-50 border border-slate-200 flex items-center shadow-sm hover:border-blue-300 transition group">
+                                <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/f26f3f72-4ec8-4b9b-8a4f-a1cdd0d2af6e" class="w-12 h-12 mr-4 object-contain">
+                                <div>
+                                    <h4 class="text-sm font-bold">Fact Sheet: New Rule on the Accessibility of Web Content and Mobile Apps Provided by State and Local Governments</h4>
+                                    <span class="text-blue-600 text-[10px] font-bold uppercase hover:underline">Download to Drive</span>
+                                </div>
+                            </a>
+                            <div class="p-5 rounded-3xl bg-slate-50 border border-slate-200 flex items-center shadow-sm">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Google_Docs_logo_%282014-2020%29.svg" class="w-10 h-10 mr-4">
+                                <div>
+                                    <h4 class="text-sm font-bold">Organization Policy</h4>
+                                    <a href="https://docs.google.com/document/d/1U6CYL1HC4u6vjUEkA5PlKid_zJ8yTbYT/view?usp=sharing" target="_blank" class="text-blue-600 text-[10px] font-bold uppercase hover:underline">Open Live Doc</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="gem-card">
+                <div class="flex items-start space-x-6">
+                    <div class="step-number-circle bg-blue-600 text-white text-sm">4</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Step 4 – Finish & Create</h3>
+                        <div class="flex justify-center">
+                            <button id="gem-save-btn" class="bg-blue-600 text-white px-12 py-3.5 rounded-full font-bold shadow-lg transition transform hover:scale-105">Create Gem</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="gem-card">
+                <div class="flex items-start space-x-6">
+                    <div class="step-number-circle bg-blue-600 text-white text-sm">5</div>
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Step 5 – Test Your Assistant</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Q1 -->
+                            <button onclick="copyValue('What can you help me with?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q1</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What can you help me with?"</p>
+                            </button>
+                            <!-- Q2 -->
+                            <button onclick="copyValue('What does the new ADA rule require for websites and mobile apps?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q2</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What does the new ADA rule require for websites?"</p>
+                            </button>
+                            <!-- Q3 -->
+                            <button onclick="copyValue('What are some practical steps an organization should focus on first to meet these requirements?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q3</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What practical steps should we focus on first?"</p>
+                            </button>
+                            <!-- Q4 -->
+                            <button onclick="copyValue('Does this rule say anything about accessibility requirements for social media content?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q4</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"What does the rule say about social media?"</p>
+                            </button>
+                            <!-- Q5 -->
+                            <button onclick="copyValue('How do accessibility requirements apply to third-party tools or platforms an organization uses?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q5</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"Does this apply to third-party tools?"</p>
+                            </button>
+                            <!-- Q6 -->
+                            <button onclick="copyValue('If we follow these steps, does that guarantee ADA compliance?')" class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left hover:border-blue-300 group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Q6</span>
+                                    <span class="text-blue-600 text-[10px] font-bold bg-white px-2 py-0.5 rounded-full shadow-sm border border-slate-100">Copy</span>
+                                </div>
+                                <p class="text-sm font-medium">"Does following this guarantee compliance?"</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="notification">Copied to clipboard!</div>
+
+    <script>
+        function switchTab(platform) {
+            const gptContent = document.getElementById('content-gpt');
+            const gemContent = document.getElementById('content-gem');
+            const gptBtn = document.getElementById('btn-gpt');
+            const gemBtn = document.getElementById('btn-gem');
+            const activeLabel = document.getElementById('active-label');
+            const body = document.body;
+
+            if (platform === 'gpt') {
+                gptContent.style.display = 'block';
+                gemContent.style.display = 'none';
+                gptBtn.classList.add('active');
+                gemBtn.classList.remove('active');
+                activeLabel.innerText = "Custom GPT";
+                activeLabel.style.color = '#2563eb';
+                body.style.backgroundColor = '#ffffff';
+            } else {
+                gptContent.style.display = 'none';
+                gemContent.style.display = 'block';
+                gptBtn.classList.remove('active');
+                gemBtn.classList.add('active');
+                activeLabel.innerText = "Gemini Gem";
+                activeLabel.style.color = '#1a73e8';
+                body.style.backgroundColor = '#f8fafd';
+            }
+        }
+
+        // UI ANIMATIONS
+        setInterval(() => {
+            const hl = document.getElementById('gpt-tab-hl');
+            if (hl) hl.classList.toggle('configure-active');
+        }, 3000);
+
+        let capStep = 0;
+        setInterval(() => {
+            const ids = ['cap-web'];
+            capStep = (capStep + 1) % 2;
+            if (capStep === 0) {
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('active');
+                });
+            } else {
+                const el = document.getElementById(ids[capStep-1]);
+                if (el) el.classList.remove('active');
+            }
+        }, 1500);
+
+        setInterval(() => {
+            const btn = document.getElementById('gpt-save-btn');
+            if (btn) { btn.classList.add('scale-95', 'opacity-80'); setTimeout(() => btn.classList.remove('scale-95', 'opacity-80'), 200); }
+            const gbtn = document.getElementById('gem-save-btn');
+            if (gbtn) { gbtn.classList.add('ring-4', 'ring-blue-100'); setTimeout(() => gbtn.classList.remove('ring-4', 'ring-blue-100'), 400); }
+        }, 4000);
+
+        function copyText(id) { performCopy(document.getElementById(id).innerText); }
+        function copyValue(val) { performCopy(val); }
+        function performCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>
