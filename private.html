@@ -265,7 +265,71 @@
     <!-- ============================== -->
     <!-- MAIN LIBRARY (hidden until authenticated) -->
     <!-- ============================== -->
-    <div id="app" class="max-w-6xl mx-auto p-4 md:p-8" style="display: none;">
+    <div id="app" class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto" style="display: none;">
+        <!-- Dashboard Sidebar -->
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-8">
+                <!-- Branding / Logo Area -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
+                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
+                
+                <!-- Assistant Library -->
+                <a href="index.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span class="text-sm">Assistant Library</span>
+                </a>
+
+                <!-- Prompt Library -->
+                <a href="prompts.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="text-sm">Prompt Library</span>
+                </a>
+
+                <!-- Create My Own -->
+                <a href="guide.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-teal-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">Create my own</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto hidden md:block pt-8 text-xs text-slate-400">
+                <p>Browse, share, and access specialized AI tools developed for and by District staff.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow p-4 md:p-8 lg:px-10 lg:py-8 max-w-6xl overflow-x-hidden">
         <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
             <div class="flex-grow">
                 <div class="flex items-center gap-3 mb-2">
@@ -278,21 +342,6 @@
                 <p class="mt-2 text-slate-600 max-w-2xl">
                     Your private collection of AI assistants. Access is restricted to authorized users only.
                 </p>
-            </div>
-            <div class="flex flex-col gap-2 min-w-fit">
-                <div class="flex items-center gap-2 mb-2">
-                    <a href="index.html"
-                        class="flex-grow inline-flex items-center justify-center gap-2 bg-gradient-to-br from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 whitespace-nowrap border border-blue-400/20">
-                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                        Back to Library
-                    </a>
-
-                </div>
-                <a href="prompts.html"
-                    class="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50:bg-slate-800 text-slate-700 px-5 py-2.5 rounded-xl font-bold shadow-sm transition-all hover:-translate-y-0.5 whitespace-nowrap">
-                    <i data-lucide="layout-grid" class="w-5 h-5 text-indigo-600"></i>
-                    View AI Prompt Library
-                </a>
             </div>
         </header>
 
@@ -396,6 +445,7 @@
             <p>© <span id="year"></span> Private AI Assistant Library <span class="opacity-30">| v1.0.0</span></p>
             <p class="mt-1">For updates, please contact mriley@aguafria.org.</p>
         </footer>
+        </main>
     </div>
 
     <script>

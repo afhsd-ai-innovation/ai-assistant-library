@@ -187,30 +187,115 @@
         details summary::-webkit-details-marker { display:none; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 min-h-screen transition-colors duration-300">
 
-    <!-- GENERAL HEADER -->
-    <header class="pt-16 pb-8 px-4 md:px-8 max-w-4xl mx-auto relative">
-        <div class="absolute top-4 right-4 md:right-8 flex items-center gap-3">
-            <a href="index.html" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Back to Library
-            </a>
+    <div class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto">
+        <!-- Dashboard Sidebar -->
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-8">
+                <!-- Branding / Logo Area -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
+                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
+                
+                <!-- Assistant Library -->
+                <a href="index.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span class="text-sm">Assistant Library</span>
+                </a>
+
+                <!-- Prompt Library -->
+                <a href="prompts.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="text-sm">Prompt Library</span>
+                </a>
+
+                <!-- Create My Own (Active) -->
+                <a href="guide.html"
+                    class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl font-bold shadow-md shadow-blue-200 transition-all hover:-translate-y-0.5 group mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 opacity-90 group-hover:scale-110 transition-transform">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">Create my own</span>
+                </a>
+            </nav>
             
-        </div>
-        <h1 class="text-4xl font-extrabold text-slate-900 mt-10 mb-6 tracking-tight">Create an AI Assistant (Custom GPT or Gem)</h1>
-        <div class="text-lg text-slate-600 leading-relaxed space-y-4">
-            <p>
-                On this page, we will walk you through how to create your first <strong>Custom GPT</strong> or <strong>Gemini Gem</strong>. These are personalized AI assistants designed to perform specific tasks using your own documents as a knowledge source.
-            </p>
-            <p>
-                For this training, we are building an <strong>ADA Digital Accessibility Coach</strong>. This assistant helps users understand the DOJ updates to ADA Title II requirements for web and mobile accessibility, which begin taking effect in April 2026.
-            </p>
-        </div>
-    </header>
+            <div class="mt-auto hidden md:block pt-8 text-xs text-slate-400">
+                <p>Browse, share, and access specialized AI tools developed for and by District staff.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="app" class="flex-grow p-4 md:p-8 lg:px-10 lg:py-8 max-w-6xl overflow-x-hidden">
+            <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                        Create an AI Assistant (Custom GPT or Gem)
+                    </h1>
+                    <div class="mt-2 text-slate-600 max-w-2xl space-y-4">
+                        <p>
+                            On this page, we will walk you through how to create your first <strong>Custom GPT</strong> or <strong>Gemini Gem</strong>. These are personalized AI assistants designed to perform specific tasks using your own documents as a knowledge source.
+                        </p>
+                        <p>
+                            For this training, we are building an <strong>ADA Digital Accessibility Coach</strong>. This assistant helps users understand the DOJ updates to ADA Title II requirements for web and mobile accessibility, which begin taking effect in April 2026.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 min-w-fit">
+                    <a href="https://chatgpt.com/gpts/editor"
+                        target="_blank"
+                        class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-5 h-5">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create new GPT
+                    </a>
+                    <a href="https://gemini.google.com/gems/create"
+                        target="_blank"
+                        class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-700 to-blue-600 hover:from-purple-800 hover:to-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-purple-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-5 h-5">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create new Gem
+                    </a>
+                </div>
+            </header>
 
     <!-- UNIFIED LIVE DEMO SECTION -->
-    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-8">
+    <section class="max-w-4xl mb-8">
         <div class="step-card bg-blue-50/50 border-blue-200">
             <div class="flex items-center mb-8">
                 <div class="bg-blue-600 text-white p-3 rounded-xl mr-4 shadow-sm">
@@ -249,7 +334,7 @@
     </section>
 
     <!-- UNIVERSAL CHOICE PATH (INFORMATIONAL) -->
-    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-8">
+    <section class="max-w-4xl mb-8">
         <div class="step-card border-blue-100 shadow-md">
             <div class="flex items-start space-x-5">
                 <div class="info-marker bg-blue-600 text-white shadow-sm">i</div>
@@ -294,7 +379,7 @@
     </section>
 
     <!-- PLATFORM SELECTOR CARD -->
-    <section class="max-w-4xl mx-auto px-4 md:px-8 mb-12">
+    <section class="max-w-4xl mb-12">
         <div class="platform-card">
             <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-10 text-center tracking-tight leading-tight">Click your chosen platform to continue</h2>
             <div class="flex justify-center">
@@ -309,7 +394,7 @@
         </div>
     </section>
 
-    <main class="py-12 px-4 md:px-8 max-w-4xl mx-auto">
+    <main class="py-12 max-w-4xl">
         
         <!-- ========================================== -->
         <!-- CUSTOM GPT CONTENT -->
@@ -755,14 +840,6 @@ KNOWLEDGE SOURCE PRIORITY:
                 </div>
             </div>
 
-1. First, use the connected Google Docs for organization-specific policies.
-2. If not covered, search official guidance on ADA.gov.</pre>
-                                <button onclick="copyText('gem-instr')" class="absolute top-2 right-2 text-amber-600 text-xs font-bold bg-white px-2 py-1 rounded shadow-sm border border-slate-200">Copy Instructions</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Step 3 -->
             <div class="step-card">
@@ -933,5 +1010,7 @@ KNOWLEDGE SOURCE PRIORITY:
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
     </script>
+        </div>
+    </div>
 </body>
 </html>
