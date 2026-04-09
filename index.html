@@ -22,6 +22,14 @@
             font-family: 'Fira Code', monospace;
         }
 
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -84,6 +92,42 @@
 
         .featured-toggle-btn.expanded svg {
             transform: rotate(180deg);
+        }
+
+        /* Description Tooltip */
+        #description-tooltip {
+            position: fixed;
+            z-index: 1000;
+            background: white;
+            color: #475569;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 320px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translateY(10px) scale(0.95);
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        #description-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .description-hover {
+            cursor: pointer;
+            text-decoration: underline decoration-dashed decoration-slate-200 underline-offset-4;
+            transition: decoration-color 0.2s ease;
+        }
+
+        .description-hover:hover {
+            decoration-color: #3b82f6;
         }
     </style>
 </head>
@@ -461,7 +505,7 @@
                             <div class="mb-4">${getPlatformIconHTML(item.type, true)}</div>
                             <div class="flex-grow">
                                 <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                                <p class="text-slate-500 text-sm line-clamp-2 mb-4">${item.description || ""}</p>
+                                <p class="text-slate-500 text-sm line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
                             </div>
                             <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
                                 <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
@@ -616,7 +660,7 @@
                             <div class="mb-4">${getPlatformIconHTML(item.type, true)}</div>
                             <div class="flex-grow">
                                 <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                                <p class="text-slate-500 text-sm line-clamp-2 mb-4">${item.description || ""}</p>
+                                <p class="text-slate-500 text-sm line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
                             </div>
                             <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
                                 <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
@@ -634,7 +678,7 @@
                         <div class="flex items-start justify-between mb-4">${getPlatformIconHTML(item.type, true)}${showBadge ? `<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)}">${item.status || ""}</span>` : ''}</div>
                         <div class="flex-grow">
                             <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4">${item.description || ""}</p>
+                            <p class="text-sm text-slate-500 line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
                             <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
@@ -657,7 +701,7 @@
                         <div class="flex items-center gap-4">${getPlatformIconHTML(item.type, false)}
                             <div>
                                 <div class="font-bold text-slate-900 group-hover:text-blue-600:text-blue-400 transition-colors">${item.name || ""}</div>
-                                <div class="text-xs text-slate-400 line-clamp-1 max-w-md">${item.description || ""}</div>
+                                <div class="text-xs text-slate-400 line-clamp-1 max-w-md description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</div>
                             </div>
                         </div>
                     </td>
@@ -874,6 +918,42 @@
         }
 
         loadAssistantsJSONP();
+
+        // Description Tooltip Logic
+        const tooltip = document.createElement('div');
+        tooltip.id = 'description-tooltip';
+        document.body.appendChild(tooltip);
+
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('.description-hover');
+            if (target) {
+                const description = target.getAttribute('data-description');
+                if (description) {
+                    tooltip.textContent = description;
+                    tooltip.classList.add('visible');
+                    
+                    const rect = target.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    
+                    let top = rect.top - tooltipRect.height - 10;
+                    let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+                    
+                    // Boundary checks
+                    if (top < 10) top = rect.bottom + 10;
+                    if (left < 10) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth - 10) left = window.innerWidth - tooltipRect.width - 10;
+                    
+                    tooltip.style.top = `${top}px`;
+                    tooltip.style.left = `${left}px`;
+                }
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('.description-hover')) {
+                tooltip.classList.remove('visible');
+            }
+        });
     </script>
 </body>
 
