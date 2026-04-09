@@ -150,6 +150,21 @@
             </div>
         </div>
 
+        <!-- ADA/WCAG Banner -->
+        <div id="ada-banner" class="mb-10 p-4 md:p-5 rounded-2xl bg-gradient-to-r from-purple-700 to-blue-600 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 transition-all border border-white/10">
+            <div class="space-y-1">
+                <h2 class="text-lg md:text-xl font-extrabold leading-tight">
+                    As of April 24, updated ADA/WCAG accessibility standards are now in effect.
+                </h2>
+                <p class="text-purple-100 text-sm font-medium">
+                    Explore AI tools to help you meet the new requirements.
+                </p>
+            </div>
+            <button onclick="filterByADA()" class="whitespace-nowrap bg-white text-blue-700 px-5 py-2.5 rounded-xl font-bold shadow-md hover:bg-blue-50 focus:ring-4 focus:ring-white/30 outline-none transition-all active:scale-95 text-sm">
+                View AI Tools
+            </button>
+        </div>
+
         <div class="space-y-6 mb-8">
             <div class="flex flex-col md:flex-row gap-4 items-stretch">
                 <div class="relative flex-grow w-full">
@@ -769,6 +784,12 @@
                 overlay.style.opacity = '1';
                 overlay.children[0].classList.replace('scale-95', 'scale-100');
             }, 10);
+        }
+
+        function filterByADA() {
+            setCategory("ADA/WCAG");
+            // Scroll to the content area for better UX
+            document.getElementById('category-filters').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         // Global helper for the new modal copy buttons
