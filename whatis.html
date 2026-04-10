@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is an AI Assistant? - District AI Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen transition-colors duration-300">
+
+    <div class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto">
+        <!-- Dashboard Sidebar -->
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-8">
+                <!-- Branding / Logo Area -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
+                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
+                
+                <!-- Assistant Library -->
+                <a href="index.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span class="text-sm">Assistant Library</span>
+                </a>
+
+                <!-- Prompt Library -->
+                <a href="prompts.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="text-sm">Prompt Library</span>
+                </a>
+
+                <!-- Create My Own -->
+                <a href="guide.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-teal-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">Create my own</span>
+                </a>
+
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1 mt-6">Resources</p>
+
+                <!-- What is an AI Assistant? (Active) -->
+                <a href="whatis.html"
+                    class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl font-bold shadow-md shadow-blue-200 transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 opacity-90 group-hover:scale-110 transition-transform">
+                        <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <span class="text-sm">What is an AI Assistant?</span>
+                </a>
+
+                <!-- Custom GPT vs Gem -->
+                <a href="compare.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-indigo-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+                    </svg>
+                    <span class="text-sm">Custom GPT vs Gem</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto hidden md:block pt-8 text-xs text-slate-400">
+                <p>Browse, share, and access specialized AI tools developed for and by District staff.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="app" class="flex-grow p-4 md:p-8 lg:px-10 lg:py-8 max-w-6xl overflow-x-hidden">
+            <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                        What is an AI Assistant?
+                    </h1>
+                    <p class="mt-2 text-slate-600 max-w-2xl">
+                        Understanding the future of personalized AI workflows at the District.
+                    </p>
+                </div>
+            </header>
+
+            <section class="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 mb-8 shadow-sm">
+                <div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest rounded-full mb-4">
+                    AI Assistant Basics
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">The Core Idea</h2>
+                <p class="text-lg text-slate-600 leading-relaxed mb-8">
+                    A normal chat can help with almost anything. An AI assistant becomes more useful when you define what it is supposed to be and what kind of result you want from it. It is shaped with a clear role, a goal, custom instructions, and an intended outcome.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                        <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-2">Role</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">What the assistant is supposed to be: email writer, lesson planner, or parent coach.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                        <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-2">Goal</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">What it's trying to accomplish: saving time, improving quality, or consistent support.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                        <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-2">Instructions</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">The guidance that tells it how to behave: tone, format, and boundaries.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                        <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-2">Outcome</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">The repeatable result: a polished draft, lesson plan, or policy summary.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visual Flow -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 mb-8 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">Visual: How It Works</h2>
+                <p class="text-slate-500 mb-8 font-medium">The transformation from basic chat to focused assistant.</p>
+
+                <div class="relative flex flex-col md:flex-row items-center gap-4 md:gap-2">
+                    <div class="flex-1 w-full bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center">
+                        <span class="block font-bold text-slate-900 text-sm mb-1">General Chat</span>
+                        <span class="block text-xs text-slate-500">Broad and generic</span>
+                    </div>
+                    <div class="text-blue-400 rotate-90 md:rotate-0 text-xl font-bold px-2">→</div>
+                    <div class="flex-1 w-full bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center">
+                        <span class="block font-bold text-slate-900 text-sm mb-1">Add Role + Goal</span>
+                        <span class="block text-xs text-slate-500">Define the mission</span>
+                    </div>
+                    <div class="text-blue-400 rotate-90 md:rotate-0 text-xl font-bold px-2">→</div>
+                    <div class="flex-1 w-full bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center">
+                        <span class="block font-bold text-slate-900 text-sm mb-1">Add Instructions</span>
+                        <span class="block text-xs text-slate-500">Shape the behavior</span>
+                    </div>
+                    <div class="text-blue-400 rotate-90 md:rotate-0 text-xl font-bold px-2">→</div>
+                    <div class="flex-1 w-full bg-blue-600 border border-blue-500 rounded-2xl p-5 text-center shadow-lg shadow-blue-100">
+                        <span class="block font-bold text-white text-sm mb-1">Targeted Outcome</span>
+                        <span class="block text-xs text-blue-100">Focused, repeatable results</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-blue-50 rounded-2xl border border-blue-100 italic text-slate-700 leading-relaxed">
+                    <span class="font-bold text-blue-700 not-italic mr-2">Example:</span> 
+                    Instead of asking a chat to "write an email" every time, you build an assistant whose role is <strong class="font-bold">Professional Email Writer</strong>. Its goal is to help staff communicate clearly, and its instructions define the perfect tone and structure for every response.
+                </div>
+            </section>
+
+            <!-- LEGO Analogy -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 mb-8 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">The LEGO Analogy</h2>
+                <p class="text-slate-600 mb-8 leading-relaxed">
+                    General chat is like a big pile of LEGO bricks—it can build anything, but requires effort to shape every time. An AI assistant is like a LEGO set with a specific design and instructions.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="group border border-slate-100 rounded-3xl overflow-hidden bg-slate-50 transition-all hover:shadow-md">
+                        <img src="images/pile_lego.jpg" alt="Pile of LEGOs" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">General Chat</h3>
+                            <p class="text-sm text-slate-500 leading-relaxed">Flexible and open-ended. It can build anything, but the outcome depends on the custom effort you put in every single time you start.</p>
+                        </div>
+                    </div>
+                    <div class="group border border-slate-100 rounded-3xl overflow-hidden bg-slate-50 transition-all hover:shadow-md">
+                        <img src="images/built_lego.jpg" alt="Built LEGO Structure" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">AI Assistant</h3>
+                            <p class="text-sm text-slate-500 leading-relaxed">Designed for a specific purpose. It has predefined rules and a clear intended design, resulting in more consistent and predictable outcomes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 border border-slate-200 rounded-2xl overflow-hidden">
+                    <div class="p-6 bg-white border-b md:border-b-0 md:border-r border-slate-200">
+                        <div class="inline-block px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase rounded mb-3">General Chat</div>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Relies on the prompt you give it each time
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Best for brainstorming and one-off tasks
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Less consistent across different sessions
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <div class="inline-block px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded mb-3">AI Assistant</div>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Built for a specific repeatable workflow
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Uses defined instructions and expectations
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500">●</span> Ideal for standard District procedures
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Platform Summary -->
+            <section class="bg-white rounded-3xl border border-slate-200 p-8 md:p-10 shadow-sm mb-12">
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">What You Can Build</h2>
+                <p class="text-slate-600 leading-relaxed mb-8">
+                    Depending on your needs, you can build your AI assistant as a <strong>Custom GPT</strong> or a <strong>Google Gem</strong>.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                    <div class="p-6 rounded-2xl border border-blue-100 bg-blue-50/50">
+                        <h3 class="font-bold text-blue-900 mb-2">Custom GPT</h3>
+                        <p class="text-sm text-blue-800/70 leading-relaxed">Best for focused assistants inside ChatGPT with uploaded knowledge and high behavioral control.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-purple-100 bg-purple-50/50">
+                        <h3 class="font-bold text-purple-900 mb-2">Google Gem</h3>
+                        <p class="text-sm text-purple-800/70 leading-relaxed">Best for workflows that depend on live Google documents or NotebookLM-related projects.</p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="compare.html" class="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition-all">
+                        Use the AI Assistant Wizard
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

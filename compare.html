@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom GPT vs Gem - District AI Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen transition-colors duration-300">
+
+    <div class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto">
+        <!-- Dashboard Sidebar -->
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-8">
+                <!-- Branding / Logo Area -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
+                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
+                
+                <!-- Assistant Library -->
+                <a href="index.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span class="text-sm">Assistant Library</span>
+                </a>
+
+                <!-- Prompt Library -->
+                <a href="prompts.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-blue-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="text-sm">Prompt Library</span>
+                </a>
+
+                <!-- Create My Own -->
+                <a href="guide.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-teal-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">Create my own</span>
+                </a>
+
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1 mt-6">Resources</p>
+
+                <!-- What is an AI Assistant? -->
+                <a href="whatis.html"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-indigo-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <span class="text-sm">What is an AI Assistant?</span>
+                </a>
+
+                <!-- Custom GPT vs Gem (Active) -->
+                <a href="compare.html"
+                    class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl font-bold shadow-md shadow-blue-200 transition-all group hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+                    </svg>
+                    <span class="text-sm">Custom GPT vs Gem</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto hidden md:block pt-8 text-xs text-slate-400">
+                <p>Browse, share, and access specialized AI tools developed for and by District staff.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="app" class="flex-grow p-4 md:p-8 lg:px-10 lg:py-8 max-w-6xl overflow-x-hidden">
+            <header class="mb-8 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                        Custom GPT vs Gem
+                    </h1>
+                    <p class="mt-2 text-slate-600 max-w-2xl">
+                        Comparing OpenAI's Custom GPTs and Google's Gemini Gems for District use.
+                    </p>
+                </div>
+            </header>
+
+            <div class="mb-8">
+                <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">
+                    Custom GPTs and Google Gems are essentially the same thing — AI assistants built with instructions and optional knowledge. They just exist on different platforms with a few small differences below.
+                </p>
+            </div>
+
+            <!-- Quick Comparison -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 mb-8 shadow-sm">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Quick Comparison</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-left">Feature</th>
+                                <th class="py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-left w-1/3">Custom GPT</th>
+                                <th class="py-3 px-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-left w-1/3">Google Gem</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-700">
+                            <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                                <td class="py-4 px-4 font-medium text-slate-900">Web control</td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-emerald-600 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        Can toggle on/off
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-rose-500 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        No toggle
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                                <td class="py-4 px-4 font-medium text-slate-900">Knowledge source</td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-emerald-600 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        Upload static files
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-emerald-600 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        Live Google Docs/Sheets
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                                <td class="py-4 px-4 font-medium text-slate-900">NotebookLM integration</td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-rose-500 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        No NotebookLM
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center text-emerald-600 font-medium">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        Yes
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Decision Wizard -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-1">Decision Wizard</h2>
+                        <p class="text-slate-500 text-sm">The Decision Wizard helps you decide which AI assistant platform to use.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mb-8" id="meter-container">
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div id="m1" class="h-full bg-blue-600 transition-all duration-300 w-0"></div>
+                    </div>
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div id="m2" class="h-full bg-blue-600 transition-all duration-300 w-0"></div>
+                    </div>
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div id="m3" class="h-full bg-blue-600 transition-all duration-300 w-0"></div>
+                    </div>
+                </div>
+
+                <div id="wizard-questions">
+                    <!-- Q1 -->
+                    <div class="question-container block" id="q1">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Step 1 of 3</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Do you want your assistant to use live Google Docs or Sheets that update automatically?</h3>
+                        <p class="text-sm text-slate-500 mb-6 font-medium">Recommended: choose manual uploads unless your documents change frequently.</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="answer-btn text-left p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="none">
+                                <span class="block font-bold text-slate-900">No</span>
+                                <span class="block text-sm text-slate-500 mt-1">I will upload files manually (recommended)</span>
+                            </button>
+                            <button class="answer-btn text-left p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="gem">
+                                <span class="block font-bold text-slate-900">Yes</span>
+                                <span class="block text-sm text-slate-500 mt-1">I want it to pull from live Google files</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="question-container hidden" id="q2">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Step 2 of 3</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Do you want your assistant to be able to search the internet, or only use the documents you upload?</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="answer-btn text-left p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="gpt">
+                                <span class="block font-bold text-slate-900">Yes</span>
+                                <span class="block text-sm text-slate-500 mt-1">It should be able to search the web</span>
+                            </button>
+                            <button class="answer-btn text-left p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="none">
+                                <span class="block font-bold text-slate-900">No</span>
+                                <span class="block text-sm text-slate-500 mt-1">It should only use my uploaded documents</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="question-container hidden" id="q3">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Step 3 of 3</div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Do you want it connected to a NotebookLM notebook?</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="answer-btn text-center p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="gem">
+                                <span class="block font-bold text-slate-900 text-lg">Yes</span>
+                            </button>
+                            <button class="answer-btn text-center p-5 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition bg-white" data-val="none">
+                                <span class="block font-bold text-slate-900 text-lg">No</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div id="result-container" class="hidden">
+                    <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 mt-4 text-center">
+                        <h3 id="result-title" class="text-3xl font-bold text-slate-900 mb-3"></h3>
+                        <p id="result-desc" class="text-slate-600 text-lg leading-relaxed mb-6"></p>
+                        
+                        <p class="text-slate-900 mb-6 font-medium"><strong>Next Step:</strong> Would you like to see step-by-step instructions on how to create your AI assistant?</p>
+                        
+                        <a href="guide.html" id="result-btn" class="inline-flex items-center gap-2 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md">
+                            <!-- Label injected -->
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex justify-end mt-6">
+                    <button id="back-btn" class="hidden bg-slate-100 hover:bg-slate-200 text-slate-900 px-6 py-2.5 rounded-xl font-bold transition-colors">
+                        Back
+                    </button>
+                </div>
+            </div>
+
+<script>
+let step = 0;
+let gptCount = 0;
+let gemCount = 0;
+
+const questions = document.querySelectorAll('.question-container');
+const resultContainer = document.getElementById('result-container');
+const backBtn = document.getElementById('back-btn');
+const meterContainer = document.getElementById('meter-container');
+
+// Store answers to revert score
+let historyAnswers = [];
+
+function updateMeter(){
+    document.getElementById('m1').style.width = step >= 0 ? '100%' : '0%';
+    document.getElementById('m2').style.width = step >= 1 ? '100%' : '0%';
+    document.getElementById('m3').style.width = step >= 2 ? '100%' : '0%';
+}
+
+function showResult(){
+    let title = '';
+    let description = '';
+    let buttonLabel = '';
+    let btnClass = '';
+
+    if(gemCount > gptCount){
+        title = 'Use a Google Gem';
+        description = 'Based on your answers, a Google Gem is the best fit because you are looking to connect to live Google tools or workflows that update automatically.';
+        buttonLabel = 'Build a Google Gem';
+        btnClass = 'bg-gradient-to-r from-purple-700 to-blue-600 hover:from-purple-800 hover:to-blue-700 shadow-purple-200';
+    } else if(gptCount > gemCount){
+        title = 'Use a Custom GPT';
+        description = 'Based on your answers, a Custom GPT is the best fit because you want more control over how your assistant works and what information it uses.';
+        buttonLabel = 'Build a Custom GPT';
+        btnClass = 'bg-blue-600 hover:bg-blue-700 shadow-blue-200';
+    } else {
+        title = 'Use a Custom GPT (Recommended)';
+        description = 'Based on what you are trying to build, either tool could work. However, a Custom GPT is recommended because it is simpler to start with, easier to control, and a better first step for building your initial AI assistant.';
+        buttonLabel = 'Build a Custom GPT';
+        btnClass = 'bg-blue-600 hover:bg-blue-700 shadow-blue-200';
+    }
+
+    document.getElementById('result-title').innerText = title;
+    document.getElementById('result-desc').innerText = description;
+    
+    document.getElementById('result-btn').innerText = buttonLabel;
+    document.getElementById('result-btn').className = `inline-flex items-center gap-2 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md ${btnClass}`;
+
+    resultContainer.classList.remove('hidden');
+    resultContainer.classList.add('block');
+    backBtn.classList.remove('hidden');
+}
+
+document.querySelectorAll('.answer-btn').forEach(btn => {
+    btn.onclick = () => {
+        const val = btn.getAttribute('data-val');
+        historyAnswers[step] = val; 
+        if(val === 'gpt') gptCount++;
+        if(val === 'gem') gemCount++;
+
+        questions[step].classList.remove('block');
+        questions[step].classList.add('hidden');
+        step++;
+
+        if(step < questions.length){
+            questions[step].classList.remove('hidden');
+            questions[step].classList.add('block');
+            backBtn.classList.remove('hidden');
+            updateMeter();
+        } else {
+            meterContainer.classList.add('hidden');
+            showResult();
+        }
+    }
+});
+
+backBtn.onclick = () => {
+    if(step === 0) return;
+
+    if (step === questions.length) {
+        resultContainer.classList.remove('block');
+        resultContainer.classList.add('hidden');
+        meterContainer.classList.remove('hidden');
+    } else {
+        questions[step].classList.remove('block');
+        questions[step].classList.add('hidden');
+    }
+    
+    step--;
+    
+    const lastAns = historyAnswers[step];
+    if (lastAns === 'gpt') gptCount--;
+    if (lastAns === 'gem') gemCount--;
+
+    questions[step].classList.remove('hidden');
+    questions[step].classList.add('block');
+
+    if (step === 0) {
+        backBtn.classList.add('hidden');
+    }
+    
+    updateMeter();
+};
+
+updateMeter();
+</script>
+        </main>
+    </div>
+
+</body>
+</html>
