@@ -136,19 +136,14 @@
 
     <div class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto">
         <!-- Dashboard Sidebar -->
-        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
-            <div class="mb-8">
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-3 md:p-4 lg:p-5 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-4">
                 <!-- Branding / Logo Area -->
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
-                    </div>
-                    <div>
-                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
-                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
-                    </div>
-                </div>
+                <a href="index.html" class="block transition-all hover:opacity-90">
+                    <img id="sidebar-logo" src="images/sidebar-logo.png" alt="District AI" class="w-full h-auto rounded-xl shadow-sm">
+                </a>
             </div>
+
 
             <nav class="flex flex-col gap-3">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
@@ -213,6 +208,19 @@
                         <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
                     </svg>
                     <span class="text-sm">Custom GPT vs Gem</span>
+                </a>
+
+                <!-- AI Resource Hub -->
+                <a href="https://www.aguafria.org/aihub" target="_blank"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-red-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">AI Resource Hub</span>
                 </a>
             </nav>
 
@@ -572,26 +580,41 @@
                 // Render all featured cards into the grid
                 featuredGrid.innerHTML = featuredItems.map((item, idx) => {
                     const safeName = (item.name || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-                    const commonButtons = `
-                        <button onclick="handleFeedback(event)" title="Feedback" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.feedback}</button>
-                        <button onclick="handleBookmark(event, '${safeName}', '${item.url || ""}')" title="Bookmark" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.bookmark}</button>
-                        ${item.instructions ? `<button onclick="openFeaturedModal(event, ${idx})" title="View instructions" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.copy}</button>` : ''}
+                    
+                    const cardFooter = `
+                        <div class="-mx-5 border-t border-slate-100 grid grid-cols-2 divide-x divide-slate-100 bg-slate-50/70 overflow-hidden">
+                            <button onclick="handleFeedback(event)" 
+                                    class="flex items-center justify-center py-2.5 px-2 gap-2 hover:bg-white text-slate-700 hover:text-blue-600 transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                <span class="text-[9px] font-black uppercase tracking-[0.1em]">Feedback</span>
+                            </button>
+                            <button onclick="openFeaturedModal(event, ${idx})" 
+                                    class="flex items-center justify-center py-2.5 px-2 gap-2 hover:bg-white text-slate-700 hover:text-blue-600 transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                <span class="text-[9px] font-black uppercase tracking-[0.1em]">Instructions</span>
+                            </button>
+                        </div>
                     `;
+
                     return `
-                        <a href="${item.url || "#"}" target="_blank" class="group bg-white rounded-2xl border border-blue-200 shadow-sm p-6 hover:shadow-lg hover:shadow-blue-900/15 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden">
-                            <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest z-10">Featured</div>
-                            <div class="mb-4">${getPlatformIconHTML(item.type, true)}</div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                                <p class="text-slate-500 text-sm line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
-                            </div>
-                            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-                                <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-                                <div class="flex items-center gap-1.5">${commonButtons}<i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-50 transition-colors"></i></div>
-                            </div>
-                        </a>
+                        <div class="group bg-white rounded-2xl border border-blue-200 shadow-sm hover:shadow-lg hover:shadow-blue-900/15 hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative">
+                            <a href="${item.url || '#'}" target="_blank" class="p-5 flex flex-col flex-grow">
+                                <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-bl-xl uppercase tracking-widest z-10">Featured</div>
+                                <div class="mb-3">${getPlatformIconHTML(item.type, true)}</div>
+                                <h3 class="text-base font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors mb-1.5 leading-tight uppercase tracking-tight">${item.name || ''}</h3>
+                                <p class="text-slate-500 text-[12.5px] line-clamp-2 mb-3 description-hover" data-description="${(item.description || '').replace(/"/g, '&quot;')}">${item.description || ''}</p>
+                                <div class="flex flex-wrap gap-1.5 mt-auto">
+                                    <span class="text-[9px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md uppercase tracking-wider">${item.department || 'General'}</span>
+                                </div>
+                            </a>
+                            ${cardFooter}
+                        </div>
                     `;
                 }).join('');
+
+
+
+
 
                 window._featuredItems = featuredItems;
 
@@ -708,11 +731,22 @@
                 const isSpecial = statusLower.includes('featured') || statusLower.includes('new') || statusLower.includes('beta');
                 const safeName = (item.name || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
 
-                const commonButtons = `
-                    <button onclick="handleFeedback(event)" title="Feedback" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.feedback}</button>
-                    <button onclick="handleBookmark(event, '${safeName}', '${item.url || ""}')" title="Bookmark" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.bookmark}</button>
-                    ${item.instructions ? `<button onclick="openAssistantModal_v2(event, ${idx})" title="View instructions" class="p-1.5 rounded-md hover:bg-blue-50 text-blue-600 transition-colors">${ICONS.copy}</button>` : ''}
+                const cardFooter = `
+                    <div class="-mx-5 border-t border-slate-100 grid grid-cols-2 divide-x divide-slate-100 bg-slate-50/70 overflow-hidden">
+                        <button onclick="handleFeedback(event)" 
+                                class="flex items-center justify-center py-2.5 px-2 gap-2 hover:bg-white text-slate-700 hover:text-blue-600 transition-all group/fdbk">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            <span class="text-[9px] font-black uppercase tracking-[0.1em]">Feedback</span>
+                        </button>
+                        <button onclick="${item.instructions ? (isSpecial ? 'openFeaturedModal' : 'openAssistantModal_v2') : 'void'}(event, ${idx})" 
+                                class="flex items-center justify-center py-2.5 px-2 gap-2 hover:bg-white text-slate-700 hover:text-blue-600 transition-all group/instr ${!item.instructions ? 'opacity-30 cursor-not-allowed' : ''}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                            <span class="text-[9px] font-black uppercase tracking-[0.1em]">Instructions</span>
+                        </button>
+                    </div>
                 `;
+
+
 
                 if (isSpecial) {
                     let badgeText = "";
@@ -733,39 +767,47 @@
                         borderColor = "border-blue-200";
                     }
                     return `
-                        <a href="${item.url || "#"}" target="_blank" class="group bg-white rounded-2xl border ${borderColor} shadow-sm p-6 hover:shadow-xl hover:shadow-blue-900/20 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden">
-                            <div class="absolute top-0 right-0 ${badgeColor} text-white text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest z-10">${badgeText}</div>
-                            <div class="mb-4">${getPlatformIconHTML(item.type, true)}</div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                                <p class="text-slate-500 text-sm line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
-                            </div>
-                            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-                                <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-                                <div class="flex items-center gap-1.5">${commonButtons}<i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-50 transition-colors"></i></div>
-                            </div>
-                        </a>
+                        <div class="group bg-white rounded-2xl border ${borderColor} shadow-sm hover:shadow-lg hover:shadow-blue-900/10 hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative">
+                            <a href="${item.url || '#'}" target="_blank" class="p-5 flex flex-col flex-grow">
+                                <div class="absolute top-0 right-0 ${badgeColor} text-white text-[9px] font-black px-2.5 py-0.5 rounded-bl-xl uppercase tracking-widest z-10">${badgeText}</div>
+                                <div class="mb-3">${getPlatformIconHTML(item.type, true)}</div>
+                                <h3 class="text-base font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors mb-1.5 leading-tight uppercase tracking-tight">${item.name || ''}</h3>
+                                <p class="text-[12.5px] text-slate-500 line-clamp-2 mb-3 description-hover" data-description="${(item.description || '').replace(/"/g, '&quot;')}">${item.description || ''}</p>
+                                <div class="flex flex-wrap gap-1.5 mt-auto">
+                                    <span class="text-[9px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md uppercase tracking-wider">${item.department || 'General'}</span>
+                                </div>
+                            </a>
+                            ${cardFooter}
+                        </div>
                     `;
-                }
+
+                } // end isSpecial
 
                 const statusText = (item.status || "").toLowerCase();
                 const showBadge = statusText.includes('new');
 
                 return `
-                    <a href="${item.url || "#"}" target="_blank" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-900/10 hover:-translate-y-1 transition-all group flex flex-col h-full relative">
-                        <div class="flex items-start justify-between mb-4">${getPlatformIconHTML(item.type, true)}${showBadge ? `<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)}">${item.status || ""}</span>` : ''}</div>
-                        <div class="flex-grow">
-                            <h3 class="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition-colors mb-2 leading-tight">${item.name || ""}</h3>
-                            <p class="text-sm text-slate-500 line-clamp-3 mb-4 description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</p>
-                        </div>
-                        <div class="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-                            <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span>
-                            <div class="flex items-center gap-1.5">${commonButtons}<i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-blue-50 transition-colors"></i></div>
-                        </div>
-                    </a>
+                    <div class="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-900/10 hover:-translate-y-1 transition-all flex flex-col overflow-hidden relative">
+                        <a href="${item.url || '#'}" target="_blank" class="p-5 flex flex-col flex-grow">
+                            <div class="flex items-start justify-between mb-3">
+                                ${getPlatformIconHTML(item.type, true)}
+                                ${showBadge ? `<span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${getStatusClass(item.status)}">${item.status || ''}</span>` : ''}
+                            </div>
+                            <h3 class="font-extrabold text-base text-slate-900 group-hover:text-blue-600 transition-colors mb-1.5 leading-tight uppercase tracking-tight">${item.name || ''}</h3>
+                            <p class="text-[12.5px] text-slate-500 line-clamp-2 mb-3 description-hover" data-description="${(item.description || '').replace(/"/g, '&quot;')}">${item.description || ''}</p>
+                            <div class="flex flex-wrap gap-1.5 mt-auto">
+                                <span class="text-[9px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md uppercase tracking-wider">${item.department || 'General'}</span>
+                            </div>
+                        </a>
+                        ${cardFooter}
+                    </div>
                 `;
+
+
+
             }).join('');
         }
+
 
         function renderList(data) {
             currentFilteredData = data;
@@ -774,28 +816,49 @@
                 const statusText = (item.status || "").toLowerCase();
                 const showBadge = statusText.includes('new') || statusText.includes('featured') || statusText.includes('beta');
                 return `
-                <tr onclick="window.open('${item.url || "#"}', '_blank')" class="hover:bg-blue-50:bg-blue-900/20 transition-colors cursor-pointer group">
+                <tr class="hover:bg-blue-50/50 transition-colors group">
                     <td class="px-6 py-4">
-                        <div class="flex items-center gap-4">${getPlatformIconHTML(item.type, false)}
+                        <div class="flex items-center gap-4">
+                            ${getPlatformIconHTML(item.type, false)}
                             <div>
-                                <div class="font-bold text-slate-900 group-hover:text-blue-600:text-blue-400 transition-colors">${item.name || ""}</div>
+                                <div class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${item.name || ""}</div>
                                 <div class="text-xs text-slate-400 line-clamp-1 max-w-md description-hover" data-description="${(item.description || "").replace(/"/g, "&quot;")}">${item.description || ""}</div>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4"><span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">${item.department || 'General'}</span></td>
-                    <td class="px-6 py-4"><span class="text-sm text-slate-600">${item.type || ""}</span></td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex items-center justify-end gap-1.5">
-                            ${showBadge ? `<span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-1">${item.status || ""}</span>` : ''}
-                            <button onclick="handleFeedback(event)" title="Feedback" class="p-1.5 rounded-md hover:bg-white:bg-slate-800 text-blue-600 transition-colors">${ICONS.feedback}</button>
-                            <button onclick="handleBookmark(event, '${safeName}', '${item.url || ""}')" title="Bookmark" class="p-1.5 rounded-md hover:bg-white:bg-slate-800 text-blue-600 transition-colors">${ICONS.bookmark}</button>
-                            ${item.instructions ? `<button onclick="openAssistantModal_v2(event, ${idx})" title="Instructions" class="p-1.5 rounded-md hover:bg-white:bg-slate-800 text-blue-600 transition-colors">${ICONS.copy}</button>` : ''}
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-blue-500:text-blue-400 transition-colors ml-1"></i>
+                    <td class="px-6 py-4 hidden sm:table-cell">
+                        <span class="inline-block text-[10px] font-black text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md uppercase tracking-wider">${item.department || 'General'}</span>
+                    </td>
+                    <td class="px-6 py-4 hidden md:table-cell">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-tight">${item.type || ""}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center justify-end gap-2 text-right">
+                             ${showBadge ? `<span class="text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-md ${getStatusClass(item.status)} mr-2">${item.status || ""}</span>` : ''}
+                             
+                             <div class="flex items-center border border-slate-200 rounded-lg overflow-hidden shadow-sm bg-white">
+                                <a href="${item.url || "#"}" target="_blank" class="px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 transition-colors flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-widest">
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                    Open
+                                </a>
+                                <div class="w-px h-6 bg-slate-200"></div>
+                                <button onclick="openAssistantModal_v2(event, ${idx})" class="px-3 py-1.5 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-widest">
+                                    <i data-lucide="info" class="w-3 h-3 text-slate-400"></i>
+                                    Docs
+                                </button>
+                                <div class="w-px h-6 bg-slate-200"></div>
+                                <button onclick="handleFeedback(event)" class="px-3 py-1.5 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-widest">
+                                    <i data-lucide="message-square" class="w-3 h-3 text-slate-400"></i>
+                                    Feed
+                                </button>
+                             </div>
                         </div>
                     </td>
                 </tr>
             `}).join('');
+
         }
 
         function getStatusClass(status) {
@@ -832,24 +895,28 @@
             overlay.style.opacity = '0';
             overlay.innerHTML = `
                 <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300 border border-slate-100" onclick="event.stopPropagation()">
+                    <!-- Top Info Card -->
+                    <div class="px-8 py-5 bg-blue-50/50 border-b border-blue-100">
+                        <p class="text-blue-800 text-[14px] font-bold leading-relaxed mb-0">
+                            Below are the system instructions that power this AI assistant. Review how it was built, then copy and adapt them to create your own tailored version.
+                        </p>
+                    </div>
+
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
                         <div class="flex items-center gap-3 ml-2 group/title cursor-pointer" onclick="copyToClipboard(event, '${item.name.replace(/'/g, "\\'")}', this.querySelector('button'))">
                             <h3 class="font-extrabold text-2xl text-slate-900">${item.name}</h3>
-                            <button class="p-1 text-blue-600 opacity-40 hover:opacity-100 transition-opacity" title="Copy name">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <button class="px-2 py-1 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-all text-[10px] font-bold border border-blue-100 opacity-60 group-hover/title:opacity-100" title="Copy name">
+                                Copy
                             </button>
                         </div>
+
                         <button class="close-modal p-2 rounded-full hover:bg-slate-100:bg-slate-800 transition-colors shrink-0 text-slate-500">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </div>
                     
                     <div class="px-8 pt-6 pb-2 bg-white">
-                        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-8">
-                            <p class="text-blue-800 text-[14px] font-bold leading-relaxed mb-0">
-                                Below are the system instructions that power this AI assistant. Review how it was built, then copy and adapt them to create your own tailored version.
-                            </p>
-                        </div>
+
  
                         <div class="space-y-6">
                             <!-- Description Box -->
@@ -860,10 +927,11 @@
                                         ${item.description || "No description available."}
                                     </div>
                                     <button onclick="copyToClipboard(event, '${(item.description || "").replace(/'/g, "\\'").replace(/\n/g, "\\n")}', this)" 
-                                            class="absolute top-3 right-3 p-2 text-blue-600 hover:bg-blue-100:bg-blue-900/40 rounded-xl transition-all opacity-40 group-hover/desc:opacity-100" 
+                                            class="absolute top-3 right-3 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-all text-[11px] font-bold shadow-sm opacity-60 group-hover/desc:opacity-100 border border-blue-100" 
                                             title="Copy description">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        Copy
                                     </button>
+
                                 </div>
                             </div>
  
@@ -875,10 +943,11 @@
                                         ${rawContent}
                                     </div>
                                     <button onclick="copyToClipboard(event, '${rawContent.replace(/'/g, "\\'").replace(/\n/g, "\\n").replace(/\r/g, "")}', this)" 
-                                            class="absolute top-3 right-3 p-2 text-blue-600 hover:bg-blue-100:bg-blue-900/40 rounded-xl transition-all opacity-40 group-hover/instr:opacity-100" 
+                                            class="absolute top-3 right-3 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-all text-[11px] font-bold shadow-sm opacity-60 group-hover/instr:opacity-100 border border-blue-100" 
                                             title="Copy instructions">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        Copy
                                     </button>
+
                                 </div>
                             </div>
                         </div>
@@ -923,20 +992,27 @@
                 const originalClass = element.className;
 
                 if (isPrimary) {
-                    element.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+                    element.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i> Copied!`;
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     element.classList.replace('bg-blue-600', 'bg-emerald-600');
                     setTimeout(() => {
                         element.innerHTML = originalHTML;
                         element.className = originalClass;
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
                     }, 2000);
                 } else {
-                    element.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                    element.classList.replace('text-blue-600', 'text-emerald-600');
+                    element.innerText = "Copied!";
+                    element.classList.replace('text-blue-600', 'text-emerald-500');
+                    element.classList.replace('bg-blue-50', 'bg-emerald-50');
+                    element.classList.replace('border-blue-100', 'border-emerald-100');
                     setTimeout(() => {
-                        element.innerHTML = originalHTML;
-                        element.classList.replace('text-emerald-600', 'text-blue-600');
+                        element.innerText = "Copy";
+                        element.classList.replace('text-emerald-500', 'text-blue-600');
+                        element.classList.replace('bg-emerald-50', 'bg-blue-50');
+                        element.classList.replace('border-emerald-100', 'border-blue-100');
                     }, 2000);
                 }
+
             } catch (err) {
                 console.error('Failed to copy: ', err);
             }

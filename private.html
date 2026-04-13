@@ -267,19 +267,14 @@
     <!-- ============================== -->
     <div id="app" class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto" style="display: none;">
         <!-- Dashboard Sidebar -->
-        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-4 md:p-6 lg:p-8 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
-            <div class="mb-8">
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-3 md:p-4 lg:p-5 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
+            <div class="mb-4">
                 <!-- Branding / Logo Area -->
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white w-6 h-6"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l8.29-8.29c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg>
-                    </div>
-                    <div>
-                        <h1 class="font-extrabold text-slate-900 leading-tight">District AI</h1>
-                        <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Assistant Library</p>
-                    </div>
-                </div>
+                <a href="index.html" class="block transition-all hover:opacity-90">
+                    <img id="sidebar-logo" src="images/sidebar-logo.png" alt="District AI" class="w-full h-auto rounded-xl shadow-sm">
+                </a>
             </div>
+
 
             <nav class="flex flex-col gap-3">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
@@ -344,6 +339,19 @@
                         <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
                     </svg>
                     <span class="text-sm">Custom GPT vs Gem</span>
+                </a>
+
+                <!-- AI Resource Hub -->
+                <a href="https://www.aguafria.org/aihub" target="_blank"
+                    class="flex items-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-xl font-bold shadow-sm transition-all group hover:-translate-y-0.5 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 text-red-600 opacity-90 group-hover:scale-110 transition-transform">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span class="text-sm">AI Resource Hub</span>
                 </a>
             </nav>
 
@@ -863,29 +871,35 @@
             overlay.style.opacity = '0';
             overlay.innerHTML = `
                 <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
-                    <div class="p-6 border-b border-slate-100 flex justify-between items-start bg-slate-50/50">
-                        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex-grow mr-3">
-                            <p class="text-indigo-800 text-[14px] font-bold leading-relaxed mb-0 text-center">
-                                Below are the system instructions that power this AI assistant. You can review them to see how it was built, then copy and adapt them to create your own version tailored to your role, tasks, or audience—no guesswork required.
-                            </p>
-                        </div>
+                    <!-- Top Info Card -->
+                    <div class="px-8 py-5 bg-indigo-50/50 border-b border-indigo-100">
+                        <p class="text-indigo-800 text-[14px] font-bold leading-relaxed mb-0 text-center">
+                            Below are the system instructions that power this AI assistant. You can review them to see how it was built, then copy and adapt them to create your own version tailored to your role, tasks, or audience—no guesswork required.
+                        </p>
+                    </div>
+
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <div class="flex-grow"></div>
                         <button class="close-modal p-2 rounded-full hover:bg-slate-200:bg-slate-700 transition-colors shrink-0 text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
                     </div>
+
                     <div class="px-6 pt-5 pb-2">
                         <div class="flex-grow">
-                             <div class="flex items-center gap-2 group/name cursor-pointer mb-1" onclick="copySmallText(event, '${(item.name || "").replace(/'/g, "\\'")}', this)" title="Click to copy name">
+                             <div class="flex items-center gap-2 group/name cursor-pointer mb-1" onclick="copySmallText(event, '${(item.name || "").replace(/'/g, "\\'")}', this.querySelector('button'))" title="Click to copy name">
                                 <h3 class="font-extrabold text-xl text-slate-900 pr-0 uppercase tracking-tight">${item.name}</h3>
-                                <div class="text-indigo-600 opacity-40 group-hover/name:opacity-100 transition-opacity p-1 hover:bg-indigo-50:bg-indigo-900/50 rounded-md">
-                                    <i data-lucide="copy" class="w-4 h-4"></i>
-                                </div>
+                                <button class="px-2 py-1 bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-lg transition-all text-[10px] font-bold border border-indigo-100 opacity-60 group-hover/name:opacity-100">
+                                    Copy
+                                </button>
                              </div>
+
                              <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Description</p>
-                             <div class="flex items-center gap-2 group/desc cursor-pointer" onclick="copySmallText(event, '${(item.description || "").replace(/'/g, "\\'")}', this)" title="Click to copy description">
+                             <div class="flex items-center gap-2 group/desc cursor-pointer" onclick="copySmallText(event, '${(item.description || "").replace(/'/g, "\\'")}', this.querySelector('button'))" title="Click to copy description">
                                 <p class="text-slate-500 text-sm mb-0 leading-relaxed">${item.description || ""}</p>
-                                <div class="text-indigo-600 opacity-40 group-hover/desc:opacity-100 transition-opacity p-1 hover:bg-indigo-50:bg-indigo-900/50 rounded-md shrink-0">
-                                    <i data-lucide="copy" class="w-4 h-4"></i>
-                                </div>
+                                <button class="px-2 py-1 bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-lg transition-all text-[10px] font-bold border border-indigo-100 opacity-60 group-hover/desc:opacity-100 shrink-0">
+                                    Copy
+                                </button>
                              </div>
+
                         </div>
                     </div>
                     <div class="px-6 pb-1 pt-4">
@@ -906,11 +920,17 @@
                     await navigator.clipboard.writeText(rawContent);
                     const btn = overlay.querySelector('.copy-btn');
                     const orig = btn.innerHTML;
-                    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+                    btn.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i> Copied!`;
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     btn.classList.replace('bg-indigo-600', 'bg-emerald-600');
-                    setTimeout(() => { btn.innerHTML = orig; btn.classList.replace('bg-emerald-600', 'bg-indigo-600'); }, 2000);
+                    setTimeout(() => { 
+                        btn.innerHTML = orig; 
+                        btn.classList.replace('bg-emerald-600', 'bg-indigo-600'); 
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
+                    }, 2000);
                 } catch (e) { }
             });
+
             const close = () => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 300); };
             overlay.addEventListener('click', close);
             overlay.querySelectorAll('.close-modal').forEach(b => b.addEventListener('click', close));
@@ -920,13 +940,19 @@
         function copySmallText(event, text, element) {
             event.preventDefault(); event.stopPropagation();
             navigator.clipboard.writeText(text).then(() => {
-                const icon = element.querySelector('.text-indigo-600');
-                const orig = icon.innerHTML;
-                icon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                icon.classList.replace('text-indigo-600', 'text-emerald-600');
-                setTimeout(() => { icon.innerHTML = orig; icon.classList.replace('text-emerald-600', 'text-indigo-600'); }, 1500);
+                element.innerText = "Copied!";
+                element.classList.replace('text-indigo-600', 'text-emerald-600');
+                element.classList.replace('bg-indigo-50', 'bg-emerald-50');
+                element.classList.replace('border-indigo-100', 'border-emerald-100');
+                setTimeout(() => { 
+                    element.innerText = "Copy"; 
+                    element.classList.replace('text-emerald-600', 'text-indigo-600'); 
+                    element.classList.replace('bg-emerald-50', 'bg-indigo-50');
+                    element.classList.replace('border-emerald-100', 'border-indigo-100');
+                }, 1500);
             });
         }
+
 
         function handleBookmark(event, name, url) {
             event.preventDefault(); event.stopPropagation();
