@@ -139,125 +139,103 @@
                     </div>
                 </div>
 
-                <!-- Platform Headers (Sticky on Desktop) -->
-                <div class="hidden md:grid grid-cols-12 gap-6 mb-4 px-6">
-                    <div class="col-span-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Feature</div>
-                    <div class="col-span-4 flex items-center gap-2">
-                        <div class="w-6 h-6 rounded bg-slate-900 flex items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" class="w-4 h-4 invert">
+                <!-- Single Unified Comparison Card -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+
+                    <!-- Card Header Row -->
+                    <div class="flex items-center px-6 py-4 bg-slate-50 border-b border-slate-200">
+                        <div class="w-2/5 text-xs font-black text-slate-400 uppercase tracking-widest">Feature</div>
+                        <div class="flex-1 flex items-center justify-center gap-2">
+                            <div class="w-6 h-6 rounded bg-[#10a37f] flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 41 41" fill="white"><path d="M37.532 16.87a9.963 9.963 0 0 0-.856-8.184 10.078 10.078 0 0 0-10.855-4.835 9.964 9.964 0 0 0-6.205-3.032 10.079 10.079 0 0 0-10.699 4.938 9.962 9.962 0 0 0-6.697 4.839 10.08 10.08 0 0 0 1.24 11.817 9.965 9.965 0 0 0 .856 8.185 10.079 10.079 0 0 0 10.855 4.835 9.965 9.965 0 0 0 6.205 3.032 10.079 10.079 0 0 0 10.7-4.938 9.965 9.965 0 0 0 6.697-4.839 10.079 10.079 0 0 0-1.241-11.816zM22.498 37.886a7.474 7.474 0 0 1-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 0 0 .655-1.134V19.054l3.366 1.944a.12.12 0 0 1 .066.092v9.299a7.505 7.505 0 0 1-7.49 7.496zM6.392 31.006a7.471 7.471 0 0 1-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 0 0 1.308 0l9.724-5.614v3.888a.12.12 0 0 1-.048.103l-8.051 4.649a7.504 7.504 0 0 1-10.24-2.744zM4.297 13.62A7.469 7.469 0 0 1 8.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 0 0 .654 1.132l9.723 5.614-3.366 1.944a.12.12 0 0 1-.114.012L7.044 23.86a7.504 7.504 0 0 1-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 0 1 .114-.012l8.048 4.648a7.498 7.498 0 0 1-1.158 13.528v-9.476a1.293 1.293 0 0 0-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 0 0-1.308 0l-9.723 5.614v-3.888a.12.12 0 0 1 .048-.103l8.05-4.645a7.497 7.497 0 0 1 11.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 0 1-.065-.092v-9.299a7.497 7.497 0 0 1 12.293-5.756 6.94 6.94 0 0 0-.236.134l-7.965 4.6a1.294 1.294 0 0 0-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18z"/></svg>
+                            </div>
+                            <span class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Custom GPT</span>
                         </div>
-                        <span class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Custom GPT</span>
-                    </div>
-                    <div class="col-span-4 flex items-center gap-2">
-                        <div class="w-6 h-6 rounded bg-blue-600 flex items-center justify-center">
-                            <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-4 h-4">
+                        <div class="flex-1 flex items-center justify-center gap-2">
+                            <div class="w-6 h-6 rounded bg-blue-600 flex items-center justify-center">
+                                <img src="https://aguafriaorg.finalsite.com/fs/resource-manager/view/43f8b818-9858-4ebe-adf6-2cbfead9c619" class="w-4 h-4">
+                            </div>
+                            <span class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Google Gem</span>
                         </div>
-                        <span class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Google Gem</span>
                     </div>
-                </div>
 
-
-
-                <div class="space-y-4">
                     <!-- Web Access -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 feature-card shadow-sm grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                        <div class="md:col-span-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
-                                <i data-lucide="globe" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-900">Web access</h3>
-                                <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight">Real-time Information</p>
-                            </div>
+                    <div class="flex flex-col md:flex-row md:items-center px-6 py-5 gap-4 border-b border-slate-100">
+                        <div class="w-full md:w-2/5">
+                            <h3 class="font-bold text-slate-900 uppercase text-sm">Web Search</h3>
+                            <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight mt-0.5">Real-time Information</p>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100 shrink-0">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex flex-col items-center justify-center gap-1">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
-                            <span class="text-[11px] text-slate-500 font-medium ml-1">Can toggle on/off</span>
+                            <span class="text-[11px] text-slate-500 font-medium text-center">Can toggle on/off</span>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100 shrink-0">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex flex-col items-center justify-center gap-1">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
-                            <span class="text-[11px] text-slate-500 font-medium ml-1">No toggle - request in instructions</span>
+                            <span class="text-[11px] text-slate-500 font-medium text-center">No toggle (set in instructions)</span>
                         </div>
                     </div>
-
-
 
                     <!-- Static Files -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 feature-card shadow-sm grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                        <div class="md:col-span-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
-                                <i data-lucide="file-text" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-900">Upload static files</h3>
-                                <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight">Word, Excel, PDF</p>
-                            </div>
+                    <div class="flex flex-col md:flex-row md:items-center px-6 py-5 gap-4 border-b border-slate-100">
+                        <div class="w-full md:w-2/5">
+                            <h3 class="font-bold text-slate-900 uppercase text-sm">Upload static files</h3>
+                            <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight mt-0.5">Word, Excel, PDF</p>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100 shrink-0">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100 shrink-0">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
                         </div>
                     </div>
 
                     <!-- Live Documents -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 feature-card shadow-sm grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                        <div class="md:col-span-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
-                                <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-900">Link live documents</h3>
-                                <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight">Google Drive</p>
-                            </div>
+                    <div class="flex flex-col md:flex-row md:items-center px-6 py-5 gap-4 border-b border-slate-100">
+                        <div class="w-full md:w-2/5">
+                            <h3 class="font-bold text-slate-900 uppercase text-sm">Link live documents</h3>
+                            <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight mt-0.5">Google Docs, Sheets, Slides</p>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-sm font-bold border border-rose-100 shrink-0">
-                                <i data-lucide="x" class="w-4 h-4"></i> No
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-50 text-rose-700 text-sm font-bold border border-rose-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> No
                             </span>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100 shrink-0">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
                         </div>
                     </div>
-
-
 
                     <!-- NotebookLM -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 feature-card shadow-sm grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                        <div class="md:col-span-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400">
-                                <i data-lucide="book-open" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-900">NotebookLM integration</h3>
-                                <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight">Advanced Research</p>
-                            </div>
+                    <div class="flex flex-col md:flex-row md:items-center px-6 py-5 gap-4">
+                        <div class="w-full md:w-2/5">
+                            <h3 class="font-bold text-slate-900 uppercase text-sm">NotebookLM integration</h3>
+                            <p class="text-[11px] text-slate-400 uppercase font-bold tracking-tight mt-0.5">Advanced Research</p>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-sm font-bold border border-rose-100">
-                                <i data-lucide="x" class="w-4 h-4"></i> No
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-50 text-rose-700 text-sm font-bold border border-rose-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> No
                             </span>
                         </div>
-                        <div class="md:col-span-4 flex flex-col items-start gap-1">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
-                                <i data-lucide="check" class="w-4 h-4"></i> Yes
+                        <div class="flex-1 flex items-center justify-center">
+                            <span class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Yes
                             </span>
                         </div>
                     </div>
+
                 </div>
             </section>
+
 
 
             <!-- Decision Wizard -->
