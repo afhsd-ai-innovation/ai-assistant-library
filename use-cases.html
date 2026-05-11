@@ -20,16 +20,66 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+    
+        
+        
+        /* Sidebar Toggle Styles */
+        aside {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            width: 280px; /* Default width */
+            overflow: visible !important; /* Allow tooltips to show */
+        }
+        
+        .sidebar-collapsed aside {
+            width: 72px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        .sidebar-collapsed aside .flex-grow,
+        .sidebar-collapsed aside span:not(.sidebar-tooltip),
+        .sidebar-collapsed aside p,
+        .sidebar-collapsed aside .mt-auto,
+        .sidebar-collapsed aside .logo-container {
+            display: none !important;
+        }
+
+        .sidebar-collapsed aside nav a {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .sidebar-collapsed aside nav a svg {
+            margin: 0 !important;
+        }
+
+        /* Tooltip positioning fix */
+        .sidebar-tooltip {
+            z-index: 1000 !important;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
     <div class="flex flex-col md:flex-row md:items-start min-h-screen max-w-[1400px] mx-auto">
         <!-- Dashboard Sidebar -->
-        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-3 md:p-4 lg:p-5 flex flex-col md:sticky md:top-0 md:h-screen md:overflow-y-auto z-10 transition-all">
-            <div class="mb-4">
-                <img src="images/think-ai-logo.png" alt="THINK AI" class="w-[80%] h-auto rounded-xl mb-3 mx-auto block">
+        <aside class="w-full md:w-64 lg:w-72 md:shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white p-3 md:p-4 lg:p-5 flex flex-col md:sticky md:top-0 md:h-screen  z-10 transition-all">
+            
+            
+            
+            <div class="flex flex-col mb-4">
+                <button id="toggle-sidebar" class="self-end p-2 hover:bg-slate-100 rounded-lg transition-colors group relative mb-2" title="Toggle Sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+                    <span class="sidebar-tooltip absolute top-full right-0 mt-2 px-2 py-1 bg-slate-800 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-[1000] shadow-lg">Close sidebar</span>
+                </button>
+                <div class="flex-grow logo-container">
+                    <img src="images/think-ai-logo.png" alt="THINK AI" class="w-[80%] h-auto rounded-xl mx-auto block">
+                </div>
             </div>
+
+
+
 
             <nav class="flex flex-col gap-3">
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 hidden md:block mb-1">Navigation</p>
@@ -176,6 +226,8 @@
 
         <!-- Main Content Area -->
         <main id="app" class="flex-grow p-4 md:p-8 lg:px-10 lg:py-8 max-w-6xl overflow-x-hidden">
+            
+
             <header class="mb-12">
                 <div class="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-widest rounded-full mb-4">
                     Inspiration & Ideas
@@ -320,6 +372,39 @@
             </section>
         </main>
     </div>
+
+
+    
+    
+    <script>
+        // Sidebar Toggle Logic
+        const toggleBtn = document.getElementById('toggle-sidebar');
+        const sidebarTooltip = document.querySelector('.sidebar-tooltip');
+
+        function updateTooltip() {
+            if (sidebarTooltip) {
+                sidebarTooltip.textContent = document.body.classList.contains('sidebar-collapsed') ? 'Open sidebar' : 'Close sidebar';
+            }
+        }
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('sidebarCollapsed', isCollapsed);
+            updateTooltip();
+        }
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleSidebar);
+            updateTooltip();
+        }
+
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+            updateTooltip();
+        }
+    </script>
+
 
 </body>
 </html>
