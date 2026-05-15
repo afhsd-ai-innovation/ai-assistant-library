@@ -1152,16 +1152,32 @@
         function resetFilters() { searchQuery = ""; selectedCategory = "All"; selectedDepartment = "All"; searchInput.value = ""; departmentFilter.value = "All"; window.location.hash = ""; updateFiltersUI(); render(); }
 
         async function loadAssistants() {
-            resultsCount.textContent = "Loading assistants\u2026";
+            resultsCount.textContent = "Loading assistants…";
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
+
             try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
-                const response = await fetch(`${DATA_API_URL}?action=assistants`, { signal: controller.signal });
+                // Try modern fetch first (Works when deployed on a web server)
+                const response = await fetch(`${DATA_API_URL}?action=assistants&t=${Date.now()}`, { 
+                    signal: controller.signal 
+                });
                 clearTimeout(timeoutId);
+                
                 if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 const payload = await response.json();
-                if (!payload || !payload.ok) throw new Error(payload ? payload.error || "API Error" : "No payload");
-                assistants = (payload.assistants || []).map(a => ({
+                if (!payload || !payload.ok) throw new Error("API Error");
+                
+                processData(payload.assistants || []);
+            } catch (e) {
+                // If fetch fails (usually CORS error because you are testing via file://)
+                // Fallback to JSONP
+                console.warn("Fetch failed, falling back to JSONP:", e);
+                loadAssistantsJSONP();
+            }
+
+            function processData(data) {
+                assistants = data.map(a => ({
                     name: a.name || "",
                     status: a.status || "",
                     type: a.type || "",
@@ -1175,10 +1191,49 @@
                 const now = new Date();
                 const upd = document.getElementById('last-updated');
                 if (upd) upd.textContent = 'Last updated: ' + (now.getMonth() + 1) + '.' + now.getDate() + ' ' + now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-            } catch (e) {
-                console.error("Fetch failed:", e);
+            }
+
+            function loadAssistantsJSONP() {
+                const oldScript = document.getElementById('jsonp-loader');
+                if (oldScript) oldScript.remove();
+
+                const cbName = 'cb_' + Date.now();
+                const jsonpTimeout = setTimeout(() => {
+                    cleanup();
+                    showError("Connection timed out. Try refreshing.");
+                }, 15000);
+
+                function cleanup() {
+                    clearTimeout(jsonpTimeout);
+                    if (window[cbName]) delete window[cbName];
+                    const s = document.getElementById('jsonp-loader');
+                    if (s) s.remove();
+                }
+
+                window[cbName] = function(payload) {
+                    cleanup();
+                    try {
+                        if (!payload || !payload.ok) throw new Error("API Error");
+                        processData(payload.assistants || []);
+                    } catch(err) {
+                        console.error("JSONP Data error:", err);
+                        showError("Connection error.");
+                    }
+                };
+
+                const script = document.createElement('script');
+                script.id = 'jsonp-loader';
+                script.src = `${DATA_API_URL}?action=assistants&callback=${cbName}`;
+                script.onerror = function() {
+                    cleanup();
+                    showError("Connection error.");
+                };
+                document.head.appendChild(script);
+            }
+
+            function showError(msg) {
                 assistants = []; updateFiltersUI(); render();
-                resultsCount.textContent = e.name === 'AbortError' ? "Connection timed out. Try refreshing." : "Connection error.";
+                resultsCount.textContent = msg;
                 if (noResultsMsg) noResultsMsg.textContent = "Trouble loading data. Please refresh or try again later.";
             }
         }

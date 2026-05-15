@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><body>
+<script>
+async function test() {
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyEUAuOtJfOIz4ejSZiZj75vUatbD9zAct1BzWusblLRlTAozkeHXJEFXnKffqwbHfgQA/exec?action=assistants");
+    const json = await res.json();
+    console.log("Fetch worked!", json.assistants.length);
+  } catch (e) {
+    console.error("Fetch failed:", e);
+  }
+}
+test();
+</script>
+</body></html>
