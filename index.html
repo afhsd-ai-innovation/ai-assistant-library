@@ -406,21 +406,91 @@
             </div>
 
             <!-- ADA/WCAG Banner -->
-            <div id="ada-banner"
-                class="mb-10 p-4 md:p-5 rounded-2xl bg-gradient-to-r from-purple-700 to-blue-600 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 transition-all border border-white/10">
-                <div class="space-y-1">
-                    <h2 class="text-lg md:text-xl font-extrabold leading-tight">
-                        As of April 24, updated ADA/WCAG accessibility standards are now in effect.
-                    </h2>
-                    <p class="text-purple-100 text-sm font-medium">
-                        Explore AI tools to help you meet the new requirements.
-                    </p>
-                </div>
-                <button onclick="filterByADA()"
-                    class="whitespace-nowrap bg-white text-blue-700 px-5 py-2.5 rounded-xl font-bold shadow-md hover:bg-blue-50 focus:ring-4 focus:ring-white/30 outline-none transition-all active:scale-95 text-sm">
-                    View AI Tools
-                </button>
-            </div>
+            <style>
+              .ada-card {
+                width: 100%;
+                background: linear-gradient(90deg, #7b22d3 0%, #2e6df3 100%);
+                border-radius: 18px;
+                padding: 22px 22px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 24px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+                margin-bottom: 2.5rem;
+              }
+              .ada-card__content {
+                color: #ffffff;
+                flex: 1 1 auto;
+                min-width: 0;
+              }
+              .ada-card__title {
+                margin: 0 0 10px;
+                font-size: 20px;
+                line-height: 1.25;
+                font-weight: 700;
+                letter-spacing: -0.2px;
+              }
+              .ada-card__text {
+                margin: 0;
+                font-size: 16px;
+                line-height: 1.45;
+                font-weight: 400;
+                max-width: 760px;
+              }
+              .ada-card__button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 auto;
+                min-width: 132px;
+                padding: 14px 20px;
+                border-radius: 14px;
+                background: #ffffff;
+                color: #2255df;
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: 700;
+                white-space: nowrap;
+                transition: transform 0.15s ease, box-shadow 0.15s ease;
+              }
+              .ada-card__button:hover,
+              .ada-card__button:focus-visible {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+                outline: none;
+              }
+              @media (max-width: 1024px) {
+                .ada-card {
+                  flex-direction: column;
+                  align-items: flex-start;
+                  padding: 20px;
+                  gap: 20px;
+                }
+                .ada-card__content {
+                  width: 100%;
+                }
+                .ada-card__title {
+                  font-size: 18px;
+                }
+                .ada-card__text {
+                  font-size: 14px;
+                }
+                .ada-card__button {
+                  width: auto;
+                  align-self: center;
+                }
+              }
+            </style>
+            <section class="ada-card" aria-label="ADA digital accessibility requirements">
+              <div class="ada-card__content">
+                <h2 class="ada-card__title">ADA Digital Accessibility Requirements – Effective April 24, 2026</h2>
+                <p class="ada-card__text">
+                  The new ADA Title II rules require the district to meet <strong>WCAG 2.1 AA standards</strong> for digital content. This applies to websites, web apps, mobile apps, PDFs, Word documents, spreadsheets, videos, audio, and social media content.
+                </p>
+              </div>
+              <a class="ada-card__button" href="https://sites.google.com/aguafria.org/myaguafriaorg/ada">View Accessibility Tools & Guidance</a>
+            </section>
 
             <div class="space-y-6 mb-8">
                 <div class="flex flex-col md:flex-row gap-4 items-stretch">
